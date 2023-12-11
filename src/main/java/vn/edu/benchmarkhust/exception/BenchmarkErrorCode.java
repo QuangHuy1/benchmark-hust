@@ -1,6 +1,5 @@
 package vn.edu.benchmarkhust.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 public enum BenchmarkErrorCode implements ErrorCode<HttpStatus> {
@@ -9,8 +8,10 @@ public enum BenchmarkErrorCode implements ErrorCode<HttpStatus> {
     ACCESS_DENIED("B101", HttpStatus.FORBIDDEN, "You do not have permission!"),
     INVALID_JSON("B102", HttpStatus.BAD_REQUEST, "Invalid json value"),
     INTERNAL_SERVER("B103", HttpStatus.INTERNAL_SERVER_ERROR, "Oops! Something is wrong!"),
-     INVALID_DATE_TIME_FORMAT("B124", HttpStatus.BAD_REQUEST, "Invalid DateTime format (yyyy-MM-dd HH:mm:ss)"),
-   ;
+    INVALID_DATE_TIME_FORMAT("B104", HttpStatus.BAD_REQUEST, "Invalid DateTime format (yyyy-MM-dd HH:mm:ss)"),
+    NOT_FOUND_ENTITY("B105", HttpStatus.NOT_FOUND, "Not found entity"),
+    INVALID_SORT_PARAM("B106", HttpStatus.BAD_REQUEST, "Invalid sort param"),
+    ;
 
     private final String code;
     private final HttpStatus httpStatus;
