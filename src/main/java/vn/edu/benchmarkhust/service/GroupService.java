@@ -1,20 +1,22 @@
 package vn.edu.benchmarkhust.service;
 
+import org.springframework.stereotype.Service;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCode;
+import vn.edu.benchmarkhust.exception.ErrorCodeException;
 import vn.edu.benchmarkhust.model.entity.Group;
 import vn.edu.benchmarkhust.model.request.GroupRequest;
-import vn.edu.benchmarkhust.model.response.GroupResponse;
 import vn.edu.benchmarkhust.repository.GroupRepository;
-import vn.edu.benchmarkhust.transfromer.GroupTransformer;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
 public class GroupService extends BaseService<Group, Long, GroupRepository> {
 
-    private final GroupTransformer transformer;
-
-    protected GroupService(GroupRepository repo, GroupTransformer transformer) {
+    protected GroupService(GroupRepository repo) {
         super(repo);
-        this.transformer = transformer;
     }
 
     @Override
@@ -22,18 +24,13 @@ public class GroupService extends BaseService<Group, Long, GroupRepository> {
         return BenchmarkErrorCode.NOT_FOUND_ENTITY;
     }
 
-    public GroupResponse getById(Long id) {
-        return transformer.toResponse(getOrElseThrow(id));
+    public Set<Group> getAllByIds(Set<Long> ids) {
+        return repo.findAllByIdIn(ids);
     }
 
-    public GroupResponse create(GroupRequest request) {
-        var group = transformer.fromRequest(request);
-        return transformer.toResponse(save(group));
-    }
-
-    public GroupResponse update(Long id, GroupRequest request) {
-        var group = getOrElseThrow(id);
-        transformer.setGroup(group, request);
-        return transformer.toResponse(save(group));
+    public void validateDuplicateCode(String code) {
+        if (repo.existsByCode(code)) {
+            throw new ErrorCodeException(BenchmarkErrorCode.DUPLICATE_ENTITY_CODE, "Duplicate group code " + code);
+        }
     }
 }

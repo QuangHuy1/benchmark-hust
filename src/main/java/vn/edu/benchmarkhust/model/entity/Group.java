@@ -15,7 +15,6 @@ public class Group extends AbstractAuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     private String code;
     private String subject1;

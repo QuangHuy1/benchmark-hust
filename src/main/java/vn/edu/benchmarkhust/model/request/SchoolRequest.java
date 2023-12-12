@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class SchoolRequest {
 
-    private String name;
+    private String vnName;
+    private String enName;
     private String abbreviations;
 
 }

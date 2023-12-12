@@ -1,5 +1,6 @@
 package vn.edu.benchmarkhust.transfromer;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.entity.School;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
@@ -11,9 +12,9 @@ public class SchoolTransformer {
 
     public SchoolResponse toResponse(School school) {
         var response = new SchoolResponse();
-        Utils.copyPropertiesNotNull(school, response);
-        return response;
-    }
+        BeanUtils.copyProperties(school, response);
+//        Utils.copyPropertiesNotNull(school, response);
+        return response;    }
 
     public School fromRequest(SchoolRequest request) {
         var school = new School();

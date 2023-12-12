@@ -11,6 +11,7 @@ public enum BenchmarkErrorCode implements ErrorCode<HttpStatus> {
     INVALID_DATE_TIME_FORMAT("B104", HttpStatus.BAD_REQUEST, "Invalid DateTime format (yyyy-MM-dd HH:mm:ss)"),
     NOT_FOUND_ENTITY("B105", HttpStatus.NOT_FOUND, "Not found entity"),
     INVALID_SORT_PARAM("B106", HttpStatus.BAD_REQUEST, "Invalid sort param"),
+    DUPLICATE_ENTITY_CODE("B107", HttpStatus.BAD_REQUEST, "Duplicate entity code"),
     ;
 
     private final String code;

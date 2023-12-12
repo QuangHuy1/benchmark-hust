@@ -15,13 +15,12 @@ public class Faculty extends AbstractAuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     private String code;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private School school;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)

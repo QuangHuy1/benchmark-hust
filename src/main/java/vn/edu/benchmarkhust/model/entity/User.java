@@ -13,7 +13,6 @@ public class User extends AbstractAuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     private String username;
     private String fullName;
