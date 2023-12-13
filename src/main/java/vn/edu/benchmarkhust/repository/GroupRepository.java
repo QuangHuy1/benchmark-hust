@@ -7,6 +7,6 @@ import vn.edu.benchmarkhust.model.entity.Group;
 import java.util.Set;
 
 public interface GroupRepository extends JpaRepository<Group, Long>, JpaSpecificationExecutor<Group> {
-    Set<Group> findAllByIdIn(Set<Long> ids);
+    Set<Group> findAllByCodeIn(Set<String> codes);
     boolean existsByCode(String code);
 }

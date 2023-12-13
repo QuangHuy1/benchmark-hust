@@ -17,4 +17,8 @@ public class FacultyService extends BaseService<Faculty, Long, FacultyRepository
     protected ErrorCode<?> errorCodeNotFoundEntity() {
         return BenchmarkErrorCode.NOT_FOUND_ENTITY;
     }
+
+    public Integer removeGroup(Long groupId, Long facultyId) {
+        return repo.removeGroup(groupId, facultyId);
+    }
 }

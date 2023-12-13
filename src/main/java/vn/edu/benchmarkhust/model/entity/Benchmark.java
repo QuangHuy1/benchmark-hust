@@ -15,8 +15,8 @@ public class Benchmark extends AbstractAuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String year;
-    private Float mark;
+    private Integer yearScore;
+    private Float pointScore;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Faculty faculty;

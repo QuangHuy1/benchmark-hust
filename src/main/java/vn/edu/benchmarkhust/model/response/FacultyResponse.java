@@ -15,7 +15,7 @@ public class FacultyResponse {
     private Long id;
     private String code;
     private String name;
-    private School school;
+    private SchoolResponse school;
     private List<GroupResponse> groups;
 
 }

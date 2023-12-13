@@ -10,8 +10,8 @@ import lombok.Data;
 public class BenchmarkResponse {
 
     private Long id;
-    private String year;
-    private Float mark;
+    private Integer yearScore;
+    private Float pointScore;
     private FacultyResponse faculty;
 
 }

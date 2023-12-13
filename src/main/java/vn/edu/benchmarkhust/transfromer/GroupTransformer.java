@@ -11,13 +11,22 @@ public class GroupTransformer {
 
     public GroupResponse toResponse(Group group) {
         var response = new GroupResponse();
-        Utils.copyPropertiesNotNull(group, response);
+        response.setId(group.getId());
+        response.setCode(group.getCode());
+        response.setSubject1(group.getSubject1());
+        response.setSubject2(group.getSubject2());
+        response.setSubject3(group.getSubject3());
+
         return response;
     }
 
     public Group fromRequest(GroupRequest request) {
         var group = new Group();
-        Utils.copyPropertiesNotNull(request, group);
+        group.setCode(request.getCode());
+        group.setSubject1(request.getSubject1());
+        group.setSubject2(request.getSubject2());
+        group.setSubject3(request.getSubject3());
+
         return group;
     }
 

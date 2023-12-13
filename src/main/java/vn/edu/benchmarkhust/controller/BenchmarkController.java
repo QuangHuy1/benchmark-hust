@@ -2,9 +2,12 @@ package vn.edu.benchmarkhust.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.BenchmarkFacade;
 import vn.edu.benchmarkhust.model.request.BenchmarkRequest;
+import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.model.response.BenchmarkResponse;
 
 @Slf4j
@@ -21,10 +24,17 @@ public class BenchmarkController {
         return facade.getById(id);
     }
 
+    @GetMapping()
+    public Page<BenchmarkResponse> search(@ModelAttribute BenchmarkSearchRequest searchRequest) {
+        log.info("Search Benchmark with request: {}", searchRequest);
+        return facade.search(searchRequest);
+    }
+
     @PostMapping
-    public BenchmarkResponse create(@RequestBody BenchmarkRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody BenchmarkRequest request) {
         log.info("Create Benchmark by request: {}", request);
-        return facade.create(request);
+        facade.create(request);
     }
 
     @PutMapping("{id}")

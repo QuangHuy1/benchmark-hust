@@ -1,6 +1,5 @@
 package vn.edu.benchmarkhust.transfromer;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.entity.School;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
@@ -12,13 +11,20 @@ public class SchoolTransformer {
 
     public SchoolResponse toResponse(School school) {
         var response = new SchoolResponse();
-        BeanUtils.copyProperties(school, response);
-//        Utils.copyPropertiesNotNull(school, response);
-        return response;    }
+        response.setId(school.getId());
+        response.setVnName(school.getVnName());
+        response.setEnName(school.getEnName());
+        response.setAbbreviations(school.getAbbreviations());
+
+        return response;
+    }
 
     public School fromRequest(SchoolRequest request) {
         var school = new School();
-        Utils.copyPropertiesNotNull(request, school);
+        school.setVnName(request.getVnName());
+        school.setEnName(request.getEnName());
+        school.setAbbreviations(request.getAbbreviations());
+
         return school;
     }
 

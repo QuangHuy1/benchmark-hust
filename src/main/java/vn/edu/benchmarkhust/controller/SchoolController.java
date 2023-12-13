@@ -2,10 +2,13 @@ package vn.edu.benchmarkhust.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.SchoolFacade;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
 import vn.edu.benchmarkhust.model.response.SchoolResponse;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -21,10 +24,17 @@ public class SchoolController {
         return facade.getById(id);
     }
 
+    @GetMapping()
+    public List<SchoolResponse> getAll() {
+        log.info("Get all School");
+        return facade.getAll();
+    }
+
     @PostMapping
-    public SchoolResponse create(@RequestBody SchoolRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody SchoolRequest request) {
         log.info("Create School by request: {}", request);
-        return facade.create(request);
+        facade.create(request);
     }
 
     @PutMapping("{id}")

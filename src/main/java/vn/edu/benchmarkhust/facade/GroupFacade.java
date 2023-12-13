@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.request.GroupRequest;
 import vn.edu.benchmarkhust.model.response.GroupResponse;
+import vn.edu.benchmarkhust.model.response.SchoolResponse;
 import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.GroupTransformer;
 
@@ -23,10 +24,14 @@ public class GroupFacade {
         return transformer.toResponse(service.getOrElseThrow(id));
     }
 
-    public GroupResponse create(GroupRequest request) {
+    public List<GroupResponse> getAll() {
+        return service.getAll().stream().map(transformer::toResponse).collect(Collectors.toList());
+    }
+
+    public void create(GroupRequest request) {
         service.validateDuplicateCode(request.getCode());
         var group = transformer.fromRequest(request);
-        return transformer.toResponse(service.save(group));
+        service.save(group);
     }
 
     public List<GroupResponse> saveAll(List<GroupRequest> requests) {

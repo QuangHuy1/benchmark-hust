@@ -12,6 +12,7 @@ public enum BenchmarkErrorCode implements ErrorCode<HttpStatus> {
     NOT_FOUND_ENTITY("B105", HttpStatus.NOT_FOUND, "Not found entity"),
     INVALID_SORT_PARAM("B106", HttpStatus.BAD_REQUEST, "Invalid sort param"),
     DUPLICATE_ENTITY_CODE("B107", HttpStatus.BAD_REQUEST, "Duplicate entity code"),
+    EXISTED_VALUE("B108", HttpStatus.BAD_REQUEST, "Exists value"),
     ;
 
     private final String code;

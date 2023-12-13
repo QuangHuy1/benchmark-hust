@@ -11,13 +11,19 @@ public class UserTransformer {
 
     public UserResponse toResponse(User user) {
         var response = new UserResponse();
-        Utils.copyPropertiesNotNull(user, response);
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setFullName(user.getFullName());
+
         return response;
     }
 
     public User fromRequest(UserRequest request) {
         var user = new User();
-        Utils.copyPropertiesNotNull(request, user);
+        user.setUsername(request.getUsername());
+        user.setFullName(request.getFullName());
+        user.setPassword(request.getPassword());
+
         return user;
     }
 

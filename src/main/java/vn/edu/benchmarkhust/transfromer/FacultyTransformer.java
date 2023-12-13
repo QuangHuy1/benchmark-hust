@@ -11,13 +11,18 @@ public class FacultyTransformer {
 
     public FacultyResponse toResponse(Faculty faculty) {
         var response = new FacultyResponse();
-        Utils.copyPropertiesNotNull(faculty, response);
+        response.setId(faculty.getId());
+        response.setCode(faculty.getCode());
+        response.setName(faculty.getName());
+
         return response;
     }
 
     public Faculty fromRequest(FacultyRequest request) {
         var benchmark = new Faculty();
-        Utils.copyPropertiesNotNull(request, benchmark);
+        benchmark.setCode(request.getCode());
+        benchmark.setName(request.getName());
+
         return benchmark;
     }
 

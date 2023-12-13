@@ -3,11 +3,13 @@ package vn.edu.benchmarkhust.facade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import vn.edu.benchmarkhust.model.entity.School;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
 import vn.edu.benchmarkhust.model.response.SchoolResponse;
 import vn.edu.benchmarkhust.service.SchoolService;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -21,10 +23,13 @@ public class SchoolFacade {
         return transformer.toResponse(service.getOrElseThrow(id));
     }
 
-    public SchoolResponse create(SchoolRequest request) {
+    public List<SchoolResponse> getAll() {
+        return service.getAll().stream().map(transformer::toResponse).collect(Collectors.toList());
+    }
+
+    public void create(SchoolRequest request) {
         var school = transformer.fromRequest(request);
-        var saved = service.save(school);
-        return transformer.toResponse(saved);
+        service.save(school);
     }
 
     public SchoolResponse update(Long id, SchoolRequest request) {

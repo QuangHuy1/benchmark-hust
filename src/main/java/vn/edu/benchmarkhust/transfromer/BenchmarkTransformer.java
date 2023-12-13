@@ -11,13 +11,18 @@ public class BenchmarkTransformer {
 
     public BenchmarkResponse toResponse(Benchmark benchmark) {
         var response = new BenchmarkResponse();
-        Utils.copyPropertiesNotNull(benchmark, response);
+        response.setId(benchmark.getId());
+        response.setYearScore(benchmark.getYearScore());
+        response.setPointScore(benchmark.getPointScore());
+
         return response;
     }
 
     public Benchmark fromRequest(BenchmarkRequest request) {
         var benchmark = new Benchmark();
-        Utils.copyPropertiesNotNull(request, benchmark);
+        benchmark.setYearScore(request.getYearScore());
+        benchmark.setPointScore(request.getPointScore());
+
         return benchmark;
     }
 

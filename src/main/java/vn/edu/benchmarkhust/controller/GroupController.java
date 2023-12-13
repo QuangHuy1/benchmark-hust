@@ -2,6 +2,7 @@ package vn.edu.benchmarkhust.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.GroupFacade;
 import vn.edu.benchmarkhust.model.request.GroupRequest;
@@ -23,10 +24,17 @@ public class GroupController {
         return facade.getById(id);
     }
 
+    @GetMapping()
+    public List<GroupResponse> getAll() {
+        log.info("Get all Groups");
+        return facade.getAll();
+    }
+
     @PostMapping
-    public GroupResponse create(@RequestBody GroupRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody GroupRequest request) {
         log.info("Create Group by request: {}", request);
-        return facade.create(request);
+        facade.create(request);
     }
 
     @PostMapping("save-all")

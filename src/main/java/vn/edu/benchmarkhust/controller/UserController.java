@@ -2,6 +2,7 @@ package vn.edu.benchmarkhust.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.UserFacade;
 import vn.edu.benchmarkhust.model.request.UserRequest;
@@ -22,9 +23,10 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse create(@RequestBody UserRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody UserRequest request) {
         log.info("Create User by request: {}", request);
-        return facade.create(request);
+        facade.create(request);
     }
 
     @PutMapping("{id}")

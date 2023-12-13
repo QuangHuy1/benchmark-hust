@@ -21,10 +21,7 @@ public class Group extends AbstractAuditingTimeEntity {
     private String subject2;
     private String subject3;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "faculty_group",
-            joinColumns = @JoinColumn(name = "faculty_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
     private Set<Faculty> faculties = new HashSet<>();
 
 

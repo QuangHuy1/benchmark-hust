@@ -20,9 +20,9 @@ public class UserFacade {
         return transformer.toResponse(service.getOrElseThrow(id));
     }
 
-    public UserResponse create(UserRequest request) {
+    public void create(UserRequest request) {
         var user = transformer.fromRequest(request);
-        return transformer.toResponse(service.save(user));
+        service.save(user);
     }
 
     public UserResponse update(Long id, UserRequest request) {
