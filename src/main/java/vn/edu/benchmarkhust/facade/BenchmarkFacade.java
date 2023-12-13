@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCodeException;
+import vn.edu.benchmarkhust.model.entity.Benchmark;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.entity.Group;
 import vn.edu.benchmarkhust.model.request.BenchmarkRequest;
@@ -17,6 +18,8 @@ import vn.edu.benchmarkhust.service.BenchmarkService;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.BenchmarkTransformer;
+import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
+import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -31,9 +34,11 @@ public class BenchmarkFacade {
     private final GroupService groupService;
 
     private final BenchmarkTransformer benchmarkTransformer;
+    private final FacultyTransformer facultyTransformer;
+    private final SchoolTransformer schoolTransformer;
 
     public BenchmarkResponse getById(Long id) {
-        return benchmarkTransformer.toResponse(benchmarkService.getOrElseThrow(id));
+        return toCompleteResponse(benchmarkService.getOrElseThrow(id));
     }
 
     public Page<BenchmarkResponse> search(BenchmarkSearchRequest searchRequest) {
@@ -41,8 +46,17 @@ public class BenchmarkFacade {
         var benchmarkPage = benchmarkService.search(searchRequest);
         if (benchmarkPage == null || CollectionUtils.isEmpty(benchmarkPage.getContent())) return Page.empty();
 
-        var benchmarkResponse = benchmarkPage.stream().map(benchmarkTransformer::toResponse).collect(Collectors.toList());
+        var benchmarkResponse = benchmarkPage.stream().map(this::toCompleteResponse).collect(Collectors.toList());
         return new PageImpl<>(benchmarkResponse, benchmarkPage.getPageable(), benchmarkPage.getTotalElements());
+    }
+
+    private BenchmarkResponse toCompleteResponse(Benchmark benchmark) {
+        var response = benchmarkTransformer.toResponse(benchmark);
+        if (benchmark.getFaculty() != null) {
+            response.setFaculty(facultyTransformer.toResponse(benchmark.getFaculty()));
+            response.setSchool(schoolTransformer.toResponse(benchmark.getFaculty().getSchool()));
+        }
+        return response;
     }
 
     public void buildSearchWithGroups(BenchmarkSearchRequest searchRequest) {

@@ -13,5 +13,6 @@ public class BenchmarkResponse {
     private Integer yearScore;
     private Float pointScore;
     private FacultyResponse faculty;
+    private SchoolResponse school;
 
 }

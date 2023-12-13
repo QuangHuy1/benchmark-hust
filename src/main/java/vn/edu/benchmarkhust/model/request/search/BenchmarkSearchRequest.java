@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -12,12 +13,12 @@ import java.util.Set;
 @Getter
 @ToString(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BenchmarkSearchRequest extends CommonSearchRequest{
+public class BenchmarkSearchRequest extends CommonSearchRequest {
 
     private Float fromScore;
     private Float toScore;
-    private Float year;
-    private Set<Long> facultyIds;
-    private Set<String> groupCodes;
+    private Integer year;
+    private Set<Long> facultyIds = new HashSet<>();
+    private Set<String> groupCodes = new HashSet<>();
 
 }

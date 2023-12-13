@@ -12,7 +12,10 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BenchmarkSpecification {
     public static Specification<Benchmark> with(BenchmarkSearchRequest searchRequest) {
-        return Specification.where(withFromScore(searchRequest.getFromScore()));
+        return Specification.where(withFromScore(searchRequest.getFromScore()))
+                .and(withToScore(searchRequest.getToScore()))
+                .and(withYear(searchRequest.getYear()))
+                .and(withFaculties(searchRequest.getFacultyIds()));
     }
 
     public static Specification<Benchmark> withFromScore(Float fromScore) {

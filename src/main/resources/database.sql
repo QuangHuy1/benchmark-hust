@@ -39,7 +39,6 @@ create table if not exists `benchmark_hust`.faculty_group
     faculty_id bigint not null,
     group_id   bigint not null,
     primary key (faculty_id, group_id),
-    constraint unique (group_id),
     constraint foreign key (group_id) references `benchmark_hust`.`group` (id),
     constraint foreign key (faculty_id) references `benchmark_hust`.faculty (id)
     );

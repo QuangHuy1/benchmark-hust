@@ -43,7 +43,7 @@ spring:
       maxLifetime: 1800000
       autoCommit: true
       leakDetectionThreshold: 10000
-      poolName: calendarHiKariPool
+      poolName: benchmarkHiKariPool
 
 logging:
   config: config/log4j2.yml
