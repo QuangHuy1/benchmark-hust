@@ -8,6 +8,8 @@ import vn.edu.benchmarkhust.facade.FacultyFacade;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +22,12 @@ public class FacultyController {
     public FacultyResponse getById(@PathVariable("id") Long id) {
         log.info("Get Faculty by Id: {}", id);
         return facade.getById(id);
+    }
+
+    @GetMapping()
+    public List<FacultyResponse> getAll() {
+        log.info("Get All faculty");
+        return facade.getAll();
     }
 
     @PostMapping
@@ -41,9 +49,4 @@ public class FacultyController {
         facade.deleteById(id);
     }
 
-    @DeleteMapping("/remove")
-    public void deleteById(@RequestParam Long groupId, @RequestParam Long facultyId) {
-        log.info("Remove groupId {} from facultyId {}", groupId, facultyId);
-        facade.removeGroup(groupId, facultyId);
-    }
 }

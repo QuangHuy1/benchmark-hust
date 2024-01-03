@@ -1,4 +1,4 @@
-package vn.edu.benchmarkhust.controller;
+package vn.edu.benchmarkhust.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

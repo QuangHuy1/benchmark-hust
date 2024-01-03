@@ -16,6 +16,7 @@ public class GroupTransformer {
         response.setSubject1(group.getSubject1());
         response.setSubject2(group.getSubject2());
         response.setSubject3(group.getSubject3());
+        response.setGroupType(group.getGroupType());
 
         return response;
     }
@@ -26,6 +27,7 @@ public class GroupTransformer {
         group.setSubject1(request.getSubject1());
         group.setSubject2(request.getSubject2());
         group.setSubject3(request.getSubject3());
+        group.setGroupType(request.getGroupType());
 
         return group;
     }

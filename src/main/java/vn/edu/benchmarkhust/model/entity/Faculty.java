@@ -25,10 +25,4 @@ public class Faculty extends AbstractAuditingTimeEntity {
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private Set<Benchmark> benchmarks = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "faculty_group",
-            joinColumns = @JoinColumn(name = "faculty_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private Set<Group> groups = new HashSet<>();
-
 }

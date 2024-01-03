@@ -12,16 +12,19 @@ public class BenchmarkTransformer {
     public BenchmarkResponse toResponse(Benchmark benchmark) {
         var response = new BenchmarkResponse();
         response.setId(benchmark.getId());
-        response.setYearScore(benchmark.getYearScore());
-        response.setPointScore(benchmark.getPointScore());
+        response.setYear(benchmark.getYear());
+        response.setScore(benchmark.getScore());
+        response.setGroupType(benchmark.getGroupType());
 
         return response;
     }
 
     public Benchmark fromRequest(BenchmarkRequest request) {
         var benchmark = new Benchmark();
-        benchmark.setYearScore(request.getYearScore());
-        benchmark.setPointScore(request.getPointScore());
+        benchmark.setYear(request.getYear());
+        benchmark.setScore(request.getScore());
+        benchmark.setGroupType(request.getGroupType());
+        benchmark.setGroupType(request.getGroupType());
 
         return benchmark;
     }

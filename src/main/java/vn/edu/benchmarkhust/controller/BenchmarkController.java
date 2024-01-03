@@ -48,4 +48,10 @@ public class BenchmarkController {
         log.info("Delete Benchmark by id: {}", id);
         facade.deleteById(id);
     }
+
+    @DeleteMapping("/remove")
+    public void deleteById(@RequestParam Long groupId, @RequestParam Long facultyId) {
+        log.info("Remove groupId {} from benchmarkId {}", groupId, facultyId);
+//        facade.removeGroup(groupId, facultyId);
+    }
 }

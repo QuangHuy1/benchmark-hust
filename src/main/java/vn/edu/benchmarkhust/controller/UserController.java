@@ -6,7 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.UserFacade;
 import vn.edu.benchmarkhust.model.request.UserRequest;
+import vn.edu.benchmarkhust.model.request.login.ChangePasswordRequest;
+import vn.edu.benchmarkhust.model.request.login.LoginRequest;
 import vn.edu.benchmarkhust.model.response.UserResponse;
+
+import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -39,5 +45,16 @@ public class UserController {
     public void deleteById(@PathVariable("id") Long id) {
         log.info("Delete User by id: {}", id);
         facade.deleteById(id);
+    }
+
+    @PostMapping("/login")
+    public Map<String, String> login(@RequestBody @Valid LoginRequest request) {
+        return Collections.singletonMap("token", facade.login(request));
+    }
+
+    @PostMapping("/change-pass")
+    @ResponseStatus(HttpStatus.OK)
+    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+        facade.changePassword(request);
     }
 }

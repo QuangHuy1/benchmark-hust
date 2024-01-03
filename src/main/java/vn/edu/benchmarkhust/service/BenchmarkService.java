@@ -2,14 +2,13 @@ package vn.edu.benchmarkhust.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import vn.edu.benchmarkhust.common.GroupType;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCode;
 import vn.edu.benchmarkhust.model.entity.Benchmark;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.repository.BenchmarkRepository;
 import vn.edu.benchmarkhust.specification.BenchmarkSpecification;
-
-import java.util.Optional;
 
 @Service
 public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepository> {
@@ -23,8 +22,8 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
         return BenchmarkErrorCode.NOT_FOUND_ENTITY;
     }
 
-    public Optional<Benchmark> findByYearAndFacultyId(Integer year, Long facultyId) {
-        return repo.findByYearAndFacultyId(year, facultyId);
+    public Integer existedByYearAndFacultyIdAndGroupType(Integer year, Long facultyId, GroupType groupType) {
+        return repo.existedByYearAndFacultyIdAndGroupType(year, facultyId, groupType.toString());
     }
 
     public Page<Benchmark> search(BenchmarkSearchRequest searchRequest) {

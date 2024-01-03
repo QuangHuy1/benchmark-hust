@@ -1,8 +1,10 @@
 package vn.edu.benchmarkhust.exception;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Getter;
 import org.apache.commons.lang3.RandomStringUtils;
 
+@Getter
 public class ErrorCodeException extends RuntimeException {
     private final String id = RandomStringUtils.randomAlphabetic(5);
     private final String message;
@@ -32,22 +34,6 @@ public class ErrorCodeException extends RuntimeException {
         this.message = message;
         this.errorCode = errorCode;
         this.description = description;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public ErrorCode<?> getErrorCode() {
-        return this.errorCode;
-    }
-
-    public JsonNode getDescription() {
-        return this.description;
     }
 
     public String toString() {

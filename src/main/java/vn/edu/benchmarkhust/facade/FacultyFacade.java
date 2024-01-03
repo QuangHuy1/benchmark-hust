@@ -5,18 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
-import vn.edu.benchmarkhust.exception.ErrorCodeException;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
 import vn.edu.benchmarkhust.service.FacultyService;
-import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.service.SchoolService;
 import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
-import vn.edu.benchmarkhust.transfromer.GroupTransformer;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,21 +24,22 @@ public class FacultyFacade {
 
     private final SchoolService schoolService;
     private final FacultyService facultyService;
-    private final GroupService groupService;
 
     private final FacultyTransformer facultyTransformer;
     private final SchoolTransformer schoolTransformer;
-    private final GroupTransformer groupTransformer;
 
     public FacultyResponse getById(Long id) {
         return facultyTransformer.toResponse(facultyService.getOrElseThrow(id));
+    }
+
+    public List<FacultyResponse> getAll() {
+        return facultyService.getAll().stream().map(facultyTransformer::toResponse).collect(Collectors.toList());
     }
 
     @Transactional(rollbackFor = Throwable.class)
     public void create(FacultyRequest request) {
         var faculty = facultyTransformer.fromRequest(request);
         faculty.setSchool(schoolService.getOrElseThrow(request.getSchoolId()));
-        faculty.setGroups(groupService.getAllByCodes(request.getGroupCodes()));
         facultyService.save(faculty);
     }
 
@@ -55,7 +53,6 @@ public class FacultyFacade {
         var saved = facultyService.save(faculty);
         var facultyResponse = facultyTransformer.toResponse(saved);
         facultyResponse.setSchool(schoolTransformer.toResponse(saved.getSchool()));
-        facultyResponse.setGroups(saved.getGroups().stream().map(groupTransformer::toResponse).collect(Collectors.toList()));
         return facultyResponse;
     }
 
@@ -71,7 +68,6 @@ public class FacultyFacade {
         if (CollectionUtils.isEmpty(request.getGroupCodes())) return;
 
         log.info("Set faculty groups by groupCodes: {}", request.getGroupCodes());
-        faculty.setGroups(groupService.getAllByCodes(request.getGroupCodes()));
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -80,10 +76,4 @@ public class FacultyFacade {
         facultyService.delete(faculty);
     }
 
-    public void removeGroup(Long groupId, Long facultyId) {
-        var deleted = facultyService.removeGroup(groupId, facultyId);
-        if (deleted == 0) {
-            throw new ErrorCodeException(BenchmarkErrorCode.NOT_FOUND_ENTITY);
-        }
-    }
 }

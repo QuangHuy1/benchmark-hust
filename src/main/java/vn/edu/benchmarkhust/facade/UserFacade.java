@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.request.UserRequest;
+import vn.edu.benchmarkhust.model.request.login.ChangePasswordRequest;
+import vn.edu.benchmarkhust.model.request.login.LoginRequest;
 import vn.edu.benchmarkhust.model.response.UserResponse;
+import vn.edu.benchmarkhust.service.AuthService;
 import vn.edu.benchmarkhust.service.UserService;
 import vn.edu.benchmarkhust.transfromer.UserTransformer;
 
@@ -14,6 +17,8 @@ import vn.edu.benchmarkhust.transfromer.UserTransformer;
 public class UserFacade {
     private final UserService service;
     private final UserTransformer transformer;
+
+    private final AuthService authService;
 
 
     public UserResponse getById(Long id) {
@@ -34,5 +39,13 @@ public class UserFacade {
     public void deleteById(Long id) {
         var user = service.getOrElseThrow(id);
         service.delete(user);
+    }
+
+    public String login(LoginRequest loginRequest) {
+        return authService.login(loginRequest);
+    }
+
+    public void changePassword(ChangePasswordRequest request) {
+        authService.changePassword(request);
     }
 }
