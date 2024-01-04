@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.jpa.domain.Specification;
+import vn.edu.benchmarkhust.common.GroupType;
 import vn.edu.benchmarkhust.model.entity.Benchmark;
 import vn.edu.benchmarkhust.model.entity.Group;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
@@ -17,6 +18,7 @@ public class BenchmarkSpecification {
         return Specification.where(withFromScore(searchRequest.getFromScore()))
                 .and(withToScore(searchRequest.getToScore()))
                 .and(withYear(searchRequest.getYear()))
+                .and(withGroupType(searchRequest.getGroupType()))
                 .and(withFaculties(searchRequest.getFacultyIds()))
                 .and(withGroups(searchRequest.getGroupCodes()));
     }
@@ -37,6 +39,12 @@ public class BenchmarkSpecification {
         if (year == null) return null;
 
         return (root, query, cb) -> cb.equal(root.get("year"), year);
+    }
+
+    private static Specification<Benchmark> withGroupType(GroupType groupType) {
+        if (groupType == null) return null;
+
+        return (root, query, cb) -> cb.equal(root.get("groupType"), groupType);
     }
 
     public static Specification<Benchmark> withFaculties(Set<Long> facultyIds) {
