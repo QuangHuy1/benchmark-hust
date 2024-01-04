@@ -31,27 +31,29 @@ create table if not exists `benchmark_hust`.`group`
     code         varchar(255) null,
     subject1     varchar(255) null,
     subject2     varchar(255) null,
-    subject3     varchar(255) null
-    );
-
-create table if not exists `benchmark_hust`.faculty_group
-(
-    faculty_id bigint not null,
-    group_id   bigint not null,
-    primary key (faculty_id, group_id),
-    constraint foreign key (group_id) references `benchmark_hust`.`group` (id),
-    constraint foreign key (faculty_id) references `benchmark_hust`.faculty (id)
+    subject3     varchar(255) null,
+    group_type   varchar(20) null
     );
 
 create table if not exists `benchmark_hust`.benchmark
 (
     id           bigint auto_increment primary key,
-    created_date datetime null,
-    updated_date datetime null,
-    point_score  float    null,
-    year_score   int      null,
-    faculty_id   bigint   null,
+    created_date datetime     null,
+    updated_date datetime     null,
+    point_score  float        null,
+    year_score   int          null,
+    group_type   varchar(20) null,
+    faculty_id   bigint       null,
     constraint foreign key (faculty_id) references `benchmark_hust`.faculty (id)
+    );
+
+create table if not exists `benchmark_hust`.benchmark_group
+(
+    benchmark_id bigint not null,
+    group_id     bigint not null,
+    primary key (benchmark_id, group_id),
+    constraint foreign key (group_id) references `benchmark_hust`.`group` (id),
+    constraint foreign key (benchmark_id) references `benchmark_hust`.benchmark (id)
     );
 
 create table if not exists `benchmark_hust`.user

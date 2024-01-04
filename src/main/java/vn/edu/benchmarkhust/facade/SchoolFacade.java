@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
 import vn.edu.benchmarkhust.model.response.SchoolResponse;
 import vn.edu.benchmarkhust.service.SchoolService;
+import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
 import java.util.List;
@@ -16,30 +17,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SchoolFacade {
 
-    private final SchoolService service;
+
+    private final SchoolService schoolService;
     private final SchoolTransformer transformer;
+    private final FacultyTransformer facultyTransformer;
 
     public SchoolResponse getById(Long id) {
-        return transformer.toResponse(service.getOrElseThrow(id));
+        var school = schoolService.getOrElseThrow(id);
+        var response = transformer.toResponse(school);
+        response.setFaculties(school.getFaculties().stream().map(facultyTransformer::toResponse).collect(Collectors.toList()));
+        return response;
     }
 
     public List<SchoolResponse> getAll() {
-        return service.getAll().stream().map(transformer::toResponse).collect(Collectors.toList());
+        return schoolService.getAll().stream().map(transformer::toResponse).collect(Collectors.toList());
     }
 
     public void create(SchoolRequest request) {
         var school = transformer.fromRequest(request);
-        service.save(school);
+        schoolService.save(school);
     }
 
     public SchoolResponse update(Long id, SchoolRequest request) {
-        var school = service.getOrElseThrow(id);
+        var school = schoolService.getOrElseThrow(id);
         transformer.setSchool(school, request);
-        return transformer.toResponse(service.save(school));
+        return transformer.toResponse(schoolService.save(school));
     }
 
     public void deleteById(Long id) {
-        var school = service.getOrElseThrow(id);
-        service.delete(school);
+        var school = schoolService.getOrElseThrow(id);
+        schoolService.delete(school);
     }
 }

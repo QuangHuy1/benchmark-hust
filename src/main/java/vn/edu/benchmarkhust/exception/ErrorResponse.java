@@ -20,6 +20,15 @@ public class ErrorResponse {
     @JsonProperty("description")
     private JsonNode description;
 
+    public ErrorResponse() {
+    }
+
+    public ErrorResponse(BenchmarkErrorCode errorCode) {
+        this.error = errorCode.code();
+        this.message = errorCode.message();
+        this.id = RandomStringUtils.randomAlphabetic(5);
+    }
+
     public ErrorResponse(String error, String message) {
         this.error = error;
         this.message = message;
@@ -32,18 +41,15 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public String toString() {
-        String var10000 = this.getId();
-        return "ErrorResponse(id=" + var10000 + ", error=" + this.getError() + ", message=" + this.getMessage() + ", description=" + this.getDescription() + ")";
-    }
-
-    public ErrorResponse() {
-    }
-
     public ErrorResponse(String id, String error, String message, JsonNode description) {
         this.id = id;
         this.error = error;
         this.message = message;
         this.description = description;
+    }
+
+    public String toString() {
+        String var10000 = this.getId();
+        return "ErrorResponse(id=" + var10000 + ", error=" + this.getError() + ", message=" + this.getMessage() + ", description=" + this.getDescription() + ")";
     }
 }

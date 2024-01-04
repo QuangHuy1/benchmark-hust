@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.core.codec.DecodingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -58,11 +59,11 @@ public class GlobalExceptionHandler  {
         return toErrorResponse(BenchmarkErrorCode.INTERNAL_SERVER, ex);
     }
 
-//    @ExceptionHandler(AccessDeniedException.class)
-//    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
-//        log.error(ex.getMessage(), ex);
-//        return toErrorResponse(BenchmarkErrorCode.ACCESS_DENIED, ex);
-//    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
+        log.error(ex.getMessage(), ex);
+        return toErrorResponse(BenchmarkErrorCode.ACCESS_DENIED, ex);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleArgNotValid(MethodArgumentNotValidException ex) {
@@ -121,7 +122,7 @@ public class GlobalExceptionHandler  {
     }
 
     private <T> ResponseEntity<T> toResponseEntity(T data, HttpStatus status) {
-        return new ResponseEntity(data, status);
+        return new ResponseEntity<>(data, status);
     }
 
 }

@@ -18,9 +18,6 @@ import vn.edu.benchmarkhust.service.BenchmarkService;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.BenchmarkTransformer;
-import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
-import vn.edu.benchmarkhust.transfromer.GroupTransformer;
-import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
 import java.util.stream.Collectors;
 
@@ -34,9 +31,6 @@ public class BenchmarkFacade {
     private final GroupService groupService;
 
     private final BenchmarkTransformer benchmarkTransformer;
-    private final FacultyTransformer facultyTransformer;
-    private final SchoolTransformer schoolTransformer;
-    private final GroupTransformer groupTransformer;
 
     public BenchmarkResponse getById(Long id) {
         return toCompleteResponse(benchmarkService.getOrElseThrow(id));
