@@ -10,6 +10,7 @@ import vn.edu.benchmarkhust.model.entity.Group;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 
 import javax.persistence.criteria.Join;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,7 +18,7 @@ public class BenchmarkSpecification {
     public static Specification<Benchmark> with(BenchmarkSearchRequest searchRequest) {
         return Specification.where(withFromScore(searchRequest.getFromScore()))
                 .and(withToScore(searchRequest.getToScore()))
-                .and(withYear(searchRequest.getYear()))
+                .and(withYears(searchRequest.getYears()))
                 .and(withGroupType(searchRequest.getGroupType()))
                 .and(withFaculties(searchRequest.getFacultyIds()))
                 .and(withGroups(searchRequest.getGroupCodes()));
@@ -35,10 +36,10 @@ public class BenchmarkSpecification {
         return (root, query, cb) -> cb.lessThanOrEqualTo(root.get("score"), toScore);
     }
 
-    public static Specification<Benchmark> withYear(Integer year) {
-        if (year == null) return null;
+    public static Specification<Benchmark> withYears(List<Integer> years) {
+        if (CollectionUtils.isEmpty(years)) return null;
 
-        return (root, query, cb) -> cb.equal(root.get("year"), year);
+        return (root, query, cb) -> root.get("year").in(years);
     }
 
     private static Specification<Benchmark> withGroupType(GroupType groupType) {

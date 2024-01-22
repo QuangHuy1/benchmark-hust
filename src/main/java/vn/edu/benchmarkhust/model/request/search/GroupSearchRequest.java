@@ -6,22 +6,13 @@ import lombok.Setter;
 import lombok.ToString;
 import vn.edu.benchmarkhust.common.GroupType;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-
 @Setter
 @Getter
 @ToString(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BenchmarkSearchRequest extends CommonSearchRequest {
+public class GroupSearchRequest extends CommonSearchRequest {
 
-    private Float fromScore;
-    private Float toScore;
-    private List<Integer> years;
+    private String code;
     private GroupType groupType;
-    private Set<Long> facultyIds = new HashSet<>();
-    private Set<String> groupCodes = new HashSet<>();
 
 }

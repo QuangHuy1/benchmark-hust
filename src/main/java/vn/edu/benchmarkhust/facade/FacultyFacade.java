@@ -3,17 +3,19 @@ package vn.edu.benchmarkhust.facade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
+import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.SchoolService;
 import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -32,8 +34,16 @@ public class FacultyFacade {
         return facultyTransformer.toResponse(facultyService.getOrElseThrow(id));
     }
 
-    public List<FacultyResponse> getAll() {
-        return facultyService.getAll().stream().map(facultyTransformer::toResponse).collect(Collectors.toList());
+    public Page<FacultyResponse> search(FacultySearchRequest searchRequest) {
+        var facultyPage = facultyService.search(searchRequest);
+        if (facultyPage == null || CollectionUtils.isEmpty(facultyPage.getContent())) return Page.empty();
+
+        var facultyResponses = facultyPage.stream().map(fa -> {
+            var response = facultyTransformer.toResponse(fa);
+            response.setSchool(schoolTransformer.toResponse(fa.getSchool()));
+            return response;
+        }).collect(Collectors.toList());
+        return new PageImpl<>(facultyResponses, facultyPage.getPageable(), facultyPage.getTotalElements());
     }
 
     @Transactional(rollbackFor = Throwable.class)

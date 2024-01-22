@@ -2,13 +2,13 @@ package vn.edu.benchmarkhust.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.FacultyFacade;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
+import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,9 +25,9 @@ public class FacultyController {
     }
 
     @GetMapping()
-    public List<FacultyResponse> getAll() {
-        log.info("Get All faculty");
-        return facade.getAll();
+    public Page<FacultyResponse> getAll(@ModelAttribute FacultySearchRequest searchRequest) {
+        log.info("Search faculty by request {}", searchRequest);
+        return facade.search(searchRequest);
     }
 
     @PostMapping

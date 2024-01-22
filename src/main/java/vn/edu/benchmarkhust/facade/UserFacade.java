@@ -2,11 +2,16 @@ package vn.edu.benchmarkhust.facade;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.request.UserRequest;
 import vn.edu.benchmarkhust.model.response.UserResponse;
 import vn.edu.benchmarkhust.service.UserService;
 import vn.edu.benchmarkhust.transfromer.UserTransformer;
+
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -17,6 +22,13 @@ public class UserFacade {
 
     public UserResponse getById(Long id) {
         return transformer.toResponse(service.getOrElseThrow(id));
+    }
+
+    public UserResponse getByToken() {
+        var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var response = transformer.toResponse(service.findByUsername(user.getUsername()));
+        response.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        return response;
     }
 
     public void create(UserRequest request) {

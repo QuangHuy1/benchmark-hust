@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.GroupFacade;
 import vn.edu.benchmarkhust.model.request.GroupRequest;
+import vn.edu.benchmarkhust.model.request.search.GroupSearchRequest;
 import vn.edu.benchmarkhust.model.response.GroupResponse;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class GroupController {
     }
 
     @GetMapping()
-    public List<GroupResponse> getAll() {
-        log.info("Get all Groups");
-        return facade.getAll();
+    public List<GroupResponse> search(@ModelAttribute GroupSearchRequest searchRequest) {
+        log.info("Search Group by request: {}", searchRequest);
+        return facade.search(searchRequest);
     }
 
     @PostMapping

@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.request.GroupRequest;
+import vn.edu.benchmarkhust.model.request.search.GroupSearchRequest;
 import vn.edu.benchmarkhust.model.response.GroupResponse;
-import vn.edu.benchmarkhust.model.response.SchoolResponse;
 import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.GroupTransformer;
 
@@ -24,8 +24,8 @@ public class GroupFacade {
         return transformer.toResponse(service.getOrElseThrow(id));
     }
 
-    public List<GroupResponse> getAll() {
-        return service.getAll().stream().map(transformer::toResponse).collect(Collectors.toList());
+    public List<GroupResponse> search(GroupSearchRequest searchRequest) {
+        return service.search(searchRequest).stream().map(transformer::toResponse).collect(Collectors.toList());
     }
 
     public void create(GroupRequest request) {

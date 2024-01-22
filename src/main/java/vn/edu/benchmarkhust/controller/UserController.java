@@ -22,6 +22,11 @@ public class UserController {
         return facade.getById(id);
     }
 
+    @GetMapping("token")
+    public UserResponse getByToken() {
+        return facade.getByToken();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody UserRequest request) {
