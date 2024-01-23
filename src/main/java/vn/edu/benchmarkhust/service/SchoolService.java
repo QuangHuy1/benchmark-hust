@@ -6,6 +6,9 @@ import vn.edu.benchmarkhust.exception.ErrorCode;
 import vn.edu.benchmarkhust.model.entity.School;
 import vn.edu.benchmarkhust.repository.SchoolRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class SchoolService extends BaseService<School, Long, SchoolRepository> {
 
@@ -16,5 +19,9 @@ public class SchoolService extends BaseService<School, Long, SchoolRepository> {
     @Override
     protected ErrorCode<?> errorCodeNotFoundEntity() {
         return BenchmarkErrorCode.NOT_FOUND_ENTITY;
+    }
+
+    public List<School> findByVnNameOrEnNameOrAbbreviations(String vnName, String enName, String abbreviations) {
+        return repo.findByVnNameOrEnNameOrAbbreviations(vnName, enName, abbreviations);
     }
 }

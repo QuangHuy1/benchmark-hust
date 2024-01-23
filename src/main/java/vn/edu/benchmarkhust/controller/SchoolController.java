@@ -8,6 +8,7 @@ import vn.edu.benchmarkhust.facade.SchoolFacade;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
 import vn.edu.benchmarkhust.model.response.SchoolResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -32,7 +33,7 @@ public class SchoolController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody SchoolRequest request) {
+    public void create(@Valid @RequestBody SchoolRequest request) {
         log.info("Create School by request: {}", request);
         facade.create(request);
     }

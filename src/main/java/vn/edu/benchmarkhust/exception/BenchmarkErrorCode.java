@@ -18,7 +18,7 @@ public enum BenchmarkErrorCode implements ErrorCode<HttpStatus> {
 
     private final String code;
     private final HttpStatus httpStatus;
-    private String message;
+    private final String message;
 
     BenchmarkErrorCode(String code,
                        HttpStatus status,

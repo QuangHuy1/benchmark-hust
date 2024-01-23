@@ -33,6 +33,9 @@ public class GroupTransformer {
     }
 
     public void setGroup(Group group, GroupRequest request) {
-        Utils.copyPropertiesNotNull(request, group);
+        group.setSubject1(request.getSubject1());
+        group.setSubject2(request.getSubject2());
+        group.setSubject3(request.getSubject3());
+        group.setGroupType(request.getGroupType());
     }
 }

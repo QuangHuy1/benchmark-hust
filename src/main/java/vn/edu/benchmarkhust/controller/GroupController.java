@@ -9,6 +9,7 @@ import vn.edu.benchmarkhust.model.request.GroupRequest;
 import vn.edu.benchmarkhust.model.request.search.GroupSearchRequest;
 import vn.edu.benchmarkhust.model.response.GroupResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -33,13 +34,13 @@ public class GroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody GroupRequest request) {
+    public void create(@Valid @RequestBody GroupRequest request) {
         log.info("Create Group by request: {}", request);
         facade.create(request);
     }
 
     @PostMapping("save-all")
-    public List<GroupResponse> saveAll(@RequestBody List<GroupRequest> requests) {
+    public List<GroupResponse> saveAll(@Valid @RequestBody List<GroupRequest> requests) {
         log.info("Save all Groups by requests: {}", requests);
         return facade.saveAll(requests);
     }

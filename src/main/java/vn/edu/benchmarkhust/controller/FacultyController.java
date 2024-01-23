@@ -10,6 +10,8 @@ import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class FacultyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody FacultyRequest request) {
+    public void create(@Valid @RequestBody FacultyRequest request) {
         log.info("Create Faculty by request: {}", request);
         facade.create(request);
     }

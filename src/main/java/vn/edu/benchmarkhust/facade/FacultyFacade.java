@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
+import vn.edu.benchmarkhust.exception.ErrorCodeException;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
@@ -49,6 +51,8 @@ public class FacultyFacade {
     @Transactional(rollbackFor = Throwable.class)
     public void create(FacultyRequest request) {
         var faculty = facultyTransformer.fromRequest(request);
+        facultyService.getByCode(request.getCode()).orElseThrow(
+                () -> new ErrorCodeException(BenchmarkErrorCode.EXISTED_VALUE, "Existed faculty code"));
         faculty.setSchool(schoolService.getOrElseThrow(request.getSchoolId()));
         facultyService.save(faculty);
     }
@@ -56,6 +60,11 @@ public class FacultyFacade {
     @Transactional(rollbackFor = Throwable.class)
     public FacultyResponse update(Long id, FacultyRequest request) {
         var faculty = facultyService.getOrElseThrow(id);
+        var existed = facultyService.getByCode(request.getCode()).orElse(null);
+        if (existed != null && !Objects.equals(existed.getId(), id)) {
+            throw new ErrorCodeException(BenchmarkErrorCode.EXISTED_VALUE, "Existed faculty code");
+        }
+
         facultyTransformer.setFaculty(faculty, request);
         setFacultySchool(faculty, request);
         setGroupsSchool(faculty, request);

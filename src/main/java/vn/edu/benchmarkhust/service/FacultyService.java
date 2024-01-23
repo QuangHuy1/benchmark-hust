@@ -9,6 +9,8 @@ import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.repository.FacultyRepository;
 import vn.edu.benchmarkhust.specification.FacultySpecification;
 
+import java.util.Optional;
+
 @Service
 public class FacultyService extends BaseService<Faculty, Long, FacultyRepository> {
 
@@ -24,5 +26,9 @@ public class FacultyService extends BaseService<Faculty, Long, FacultyRepository
     public Page<Faculty> search(FacultySearchRequest searchRequest) {
         var spec = FacultySpecification.with(searchRequest);
         return repo.findAll(spec, getPageable(searchRequest.getPageIndex(), searchRequest.getPageSize(), searchRequest.getSortBy()));
+    }
+
+    public Optional<Faculty> getByCode(String code) {
+        return repo.findByCode(code);
     }
 }

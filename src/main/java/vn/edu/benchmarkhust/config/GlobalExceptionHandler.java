@@ -72,7 +72,7 @@ public class GlobalExceptionHandler  {
             var errorEnum = BenchmarkErrorCode.valueOf(ex.getFieldError().getDefaultMessage());
             return toErrorResponse(errorEnum);
         } catch (Exception e) {
-            return toErrorResponse(BenchmarkErrorCode.UNKNOWN_ERROR);
+            return toErrorResponse(BenchmarkErrorCode.UNKNOWN_ERROR, ex.getFieldError().getDefaultMessage());
         }
     }
 
@@ -106,6 +106,12 @@ public class GlobalExceptionHandler  {
     public ResponseEntity<ErrorResponse> toErrorResponse(ErrorCodeException ex) {
         var errorCode = (ErrorCode<HttpStatus>) ex.getErrorCode();
         var errorResp = new ErrorResponse(ex.getId(), errorCode.code(), ex.getMessage(), ex.getDescription());
+        return toResponseEntity(errorResp, errorCode.status());
+    }
+
+    public ResponseEntity<ErrorResponse> toErrorResponse(BenchmarkErrorCode errorCode, String message) {
+        var id = RandomStringUtils.randomAlphabetic(5);
+        var errorResp = new ErrorResponse(id, errorCode.code(), message);
         return toResponseEntity(errorResp, errorCode.status());
     }
 
