@@ -10,6 +10,8 @@ import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.repository.BenchmarkRepository;
 import vn.edu.benchmarkhust.specification.BenchmarkSpecification;
 
+import java.util.List;
+
 @Service
 public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepository> {
 
@@ -29,5 +31,9 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
     public Page<Benchmark> search(BenchmarkSearchRequest searchRequest) {
         var spec = BenchmarkSpecification.with(searchRequest);
         return repo.findAll(spec, getPageable(searchRequest.getPageIndex(), searchRequest.getPageSize(), searchRequest.getSortBy()));
+    }
+
+    public Integer removeGroupsFromBenchmark(List<Long> groupIds, Long benchmarkId) {
+        return repo.removeGroupsFromBenchmark(groupIds, benchmarkId);
     }
 }

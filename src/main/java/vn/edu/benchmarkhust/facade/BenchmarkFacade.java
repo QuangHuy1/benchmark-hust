@@ -18,7 +18,10 @@ import vn.edu.benchmarkhust.service.BenchmarkService;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.BenchmarkTransformer;
+import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,6 +34,7 @@ public class BenchmarkFacade {
     private final GroupService groupService;
 
     private final BenchmarkTransformer benchmarkTransformer;
+    private final SchoolTransformer schoolTransformer;
 
     public BenchmarkResponse getById(Long id) {
         return toCompleteResponse(benchmarkService.getOrElseThrow(id));
@@ -49,11 +53,12 @@ public class BenchmarkFacade {
 
         if (benchmark.getGroups() != null) {
             response.setGroups(benchmark.getGroups().stream().map(Group::getCode).collect(Collectors.toList()));
+            response.setGroupIds(benchmark.getGroups().stream().map(Group::getId).collect(Collectors.toList()));
         }
 
         if (benchmark.getFaculty() != null) {
             response.setFaculty(benchmark.getFaculty().getName());
-            response.setSchool(benchmark.getFaculty().getSchool().getVnName());
+            response.setSchool(schoolTransformer.toResponse(benchmark.getFaculty().getSchool()));
         }
         return response;
     }
@@ -68,7 +73,7 @@ public class BenchmarkFacade {
         var groups = request.getGroupIds().stream().map(gr -> {
             var group = groupService.getOrElseThrow(gr);
             if (group.getGroupType() != request.getGroupType()) {
-                throw new ErrorCodeException(BenchmarkErrorCode.INVALID_GROUP_TYPE, "GroupType not match  with group " + group.getCode());
+                throw new ErrorCodeException(BenchmarkErrorCode.INVALID_GROUP_TYPE, "GroupType not match with group " + group.getCode());
             }
             return group;
         }).collect(Collectors.toSet());
@@ -84,6 +89,21 @@ public class BenchmarkFacade {
     public BenchmarkResponse update(Long id, BenchmarkRequest request) {
         var benchmark = benchmarkService.getOrElseThrow(id);
         benchmarkTransformer.setBenchmark(benchmark, request);
+
+        if (CollectionUtils.isNotEmpty(request.getGroupIds())) {
+            var groups = request.getGroupIds().stream().map(gr -> {
+                var group = groupService.getOrElseThrow(gr);
+                if (group.getGroupType() != benchmark.getGroupType()) {
+                    throw new ErrorCodeException(BenchmarkErrorCode.INVALID_GROUP_TYPE, "GroupType not match with group " + group.getCode());
+                }
+                return group;
+            }).collect(Collectors.toSet());
+            benchmark.setGroups(groups);
+        }
+
+        if (request.getFacultyId() != null) {
+            benchmark.setFaculty(facultyService.getOrElseThrow(request.getFacultyId()));
+        }
         return benchmarkTransformer.toResponse(benchmarkService.save(benchmark));
     }
 
@@ -91,5 +111,10 @@ public class BenchmarkFacade {
     public void deleteById(Long id) {
         var benchmark = benchmarkService.getOrElseThrow(id);
         benchmarkService.delete(benchmark);
+    }
+
+    public void removeGroupFromBenchmark(List<String> groupCodes, Long benchmarkId) {
+        var groupIds = groupService.getAllByCodes(new HashSet<>(groupCodes)).stream().map(Group::getId).collect(Collectors.toList());
+        benchmarkService.removeGroupsFromBenchmark(groupIds, benchmarkId);
     }
 }

@@ -3,6 +3,7 @@ package vn.edu.benchmarkhust.facade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
@@ -11,14 +12,16 @@ import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCodeException;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
+import vn.edu.benchmarkhust.model.request.SuggestionRequest;
 import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
+import vn.edu.benchmarkhust.model.response.SuggestionResponse;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.SchoolService;
 import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,8 +54,9 @@ public class FacultyFacade {
     @Transactional(rollbackFor = Throwable.class)
     public void create(FacultyRequest request) {
         var faculty = facultyTransformer.fromRequest(request);
-        facultyService.getByCode(request.getCode()).orElseThrow(
-                () -> new ErrorCodeException(BenchmarkErrorCode.EXISTED_VALUE, "Existed faculty code"));
+        facultyService.getByCode(request.getCode()).ifPresent(a -> {
+            throw new ErrorCodeException(BenchmarkErrorCode.EXISTED_VALUE, "Existed faculty code " + a.getCode());
+        });
         faculty.setSchool(schoolService.getOrElseThrow(request.getSchoolId()));
         facultyService.save(faculty);
     }
@@ -67,7 +71,6 @@ public class FacultyFacade {
 
         facultyTransformer.setFaculty(faculty, request);
         setFacultySchool(faculty, request);
-        setGroupsSchool(faculty, request);
 
         var saved = facultyService.save(faculty);
         var facultyResponse = facultyTransformer.toResponse(saved);
@@ -83,16 +86,77 @@ public class FacultyFacade {
         faculty.setSchool(schoolService.getOrElseThrow(request.getSchoolId()));
     }
 
-    private void setGroupsSchool(Faculty faculty, FacultyRequest request) {
-        if (CollectionUtils.isEmpty(request.getGroupCodes())) return;
-
-        log.info("Set faculty groups by groupCodes: {}", request.getGroupCodes());
-    }
-
     @Transactional(rollbackFor = Throwable.class)
     public void deleteById(Long id) {
         var faculty = facultyService.getOrElseThrow(id);
         facultyService.delete(faculty);
     }
 
+    public List<SuggestionResponse> getListSuggest(List<SuggestionRequest> suggestionRequests) {
+        var sugRequest = summarizeRequest(suggestionRequests);
+        var listSuggestion = facultyService.getListSuggest(sugRequest);
+        var groupByFacultyId = listSuggestion.stream().filter(f -> !Objects.isNull(f.get("facultyId")))
+                .collect(Collectors.groupingBy(f -> Long.parseLong(f.get("facultyId").toString())));
+
+        List<SuggestionResponse> suggestionResponses = new ArrayList<>();
+        groupByFacultyId.forEach((k, v) -> {
+            SuggestionResponse sug = new SuggestionResponse();
+            sug.setFacultyId(k);
+            Optional.ofNullable(v.get(0).get("facultyName")).ifPresent(opt -> sug.setFacultyName(opt.toString()));
+            Optional.ofNullable(v.get(0).get("avgBenchmark")).ifPresent(opt -> sug.setAvgBenchmark(Float.parseFloat(opt.toString())));
+            Optional.ofNullable(v.get(0).get("groupCode")).ifPresent(opt -> sug.setGroupCode(opt.toString()));
+            Optional.ofNullable(v.get(0).get("schoolId")).ifPresent(opt -> sug.setSchoolId(Long.parseLong(opt.toString())));
+            Optional.ofNullable(v.get(0).get("schoolName")).ifPresent(opt -> sug.setSchoolName(opt.toString()));
+            suggestionResponses.add(sug);
+        });
+        computePriority(suggestionRequests, suggestionResponses);
+        return suggestionResponses;
+    }
+
+    private SuggestionRequest summarizeRequest(List<SuggestionRequest> suggestionRequests) {
+        SuggestionRequest sugRequest = new SuggestionRequest();
+        for (var sug : suggestionRequests) {
+            if ("avgBenchmark".equals(sug.getFieldName())) {
+                sugRequest.setAvgBenchmark(sug.getAvgBenchmark());
+                continue;
+            }
+
+            if ("groupCode".equals(sug.getFieldName())) {
+                sugRequest.setGroupCode(sug.getGroupCode());
+                continue;
+            }
+
+            if ("schoolId".equals(sug.getFieldName())) {
+                sugRequest.setSchoolId(sug.getSchoolId());
+            }
+        }
+        return sugRequest;
+    }
+
+    private void computePriority(List<SuggestionRequest> suggestionRequests, List<SuggestionResponse> suggestionResponses) {
+        for (var response : suggestionResponses) {
+            float priorityPoint = response.getPriorityPoint();
+            for (var request : suggestionRequests) {
+                if (request.getAvgBenchmark() != null
+                        && response.getAvgBenchmark() >= request.getAvgBenchmark() - 1
+                        && response.getAvgBenchmark() <= request.getAvgBenchmark() + 1) {
+                    priorityPoint += (request.getPriorityPoint() * 2 - Math.abs(response.getAvgBenchmark() - request.getAvgBenchmark()));
+                    continue;
+                }
+
+                if (StringUtils.isNotEmpty(request.getGroupCode())
+                        && StringUtils.equals(response.getGroupCode(), request.getGroupCode())) {
+                    priorityPoint += request.getPriorityPoint() * 2;
+                    continue;
+                }
+
+                if (request.getSchoolId() != null
+                        && Objects.equals(response.getSchoolId(), request.getSchoolId())) {
+                    priorityPoint += request.getPriorityPoint() * 2;
+                }
+            }
+            response.setPriorityPoint(priorityPoint);
+        }
+        suggestionResponses.sort(Comparator.comparing(SuggestionResponse::getPriorityPoint).reversed());
+    }
 }

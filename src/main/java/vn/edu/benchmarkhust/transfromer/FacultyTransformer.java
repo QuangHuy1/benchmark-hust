@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
-import vn.edu.benchmarkhust.utils.Utils;
 
 @Component
 public class FacultyTransformer {
@@ -27,6 +26,7 @@ public class FacultyTransformer {
     }
 
     public void setFaculty(Faculty faculty, FacultyRequest request) {
-        Utils.copyPropertiesNotNull(request, faculty);
+        faculty.setCode(request.getCode());
+        faculty.setName(request.getName());
     }
 }

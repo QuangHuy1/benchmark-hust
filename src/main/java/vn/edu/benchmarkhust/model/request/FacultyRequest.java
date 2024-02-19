@@ -3,9 +3,7 @@ package vn.edu.benchmarkhust.model.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import java.util.Set;
 
 @Data
 public class FacultyRequest {
@@ -18,8 +16,5 @@ public class FacultyRequest {
 
     @Positive(message = "Invalid schoolId")
     private Long schoolId;
-
-    @NotEmpty(message = "Required groupCodes")
-    private Set<String> groupCodes;
 
 }

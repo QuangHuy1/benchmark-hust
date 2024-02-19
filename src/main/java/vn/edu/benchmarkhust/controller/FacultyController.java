@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.benchmarkhust.facade.FacultyFacade;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
+import vn.edu.benchmarkhust.model.request.SuggestionRequest;
 import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
+import vn.edu.benchmarkhust.model.response.SuggestionResponse;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -49,6 +52,12 @@ public class FacultyController {
     public void deleteById(@PathVariable("id") Long id) {
         log.info("Delete Faculty by id: {}", id);
         facade.deleteById(id);
+    }
+
+    @PostMapping("suggest")
+    public List<SuggestionResponse> getListSuggest(@RequestBody List<SuggestionRequest> requests) {
+        log.info("Get list suggest by request: {}", requests);
+        return facade.getListSuggest(requests);
     }
 
 }

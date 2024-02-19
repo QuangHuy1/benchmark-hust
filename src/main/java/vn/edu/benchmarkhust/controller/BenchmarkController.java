@@ -10,6 +10,8 @@ import vn.edu.benchmarkhust.model.request.BenchmarkRequest;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.model.response.BenchmarkResponse;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -49,9 +51,9 @@ public class BenchmarkController {
         facade.deleteById(id);
     }
 
-    @DeleteMapping("/remove")
-    public void deleteById(@RequestParam Long groupId, @RequestParam Long facultyId) {
-        log.info("Remove groupId {} from benchmarkId {}", groupId, facultyId);
-//        facade.removeGroup(groupId, facultyId);
+    @DeleteMapping("/remove-group")
+    public void removeGroupsFromBenchmark(@RequestParam List<String> groupCodes, @RequestParam Long benchmarkId) {
+        log.info("Remove groupCodes {} from benchmarkId {}", groupCodes, benchmarkId);
+        facade.removeGroupFromBenchmark(groupCodes, benchmarkId);
     }
 }

@@ -17,7 +17,8 @@ public class BenchmarkResponse {
     private Float score;
     private GroupType groupType;
     private String faculty;
-    private String school;
+    private SchoolResponse school;
     private List<String> groups;
+    private List<Long> groupIds;
 
 }

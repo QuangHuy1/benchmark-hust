@@ -30,6 +30,8 @@ public class BenchmarkTransformer {
     }
 
     public void setBenchmark(Benchmark benchmark, BenchmarkRequest request) {
-        Utils.copyPropertiesNotNull(request, benchmark);
+        benchmark.setYear(request.getYear());
+        benchmark.setScore(request.getScore());
+        benchmark.setGroupType(request.getGroupType());
     }
 }
