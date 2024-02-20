@@ -2,8 +2,10 @@ package vn.edu.benchmarkhust.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import vn.edu.benchmarkhust.model.entity.Faculty;
 
 import java.util.List;
@@ -25,5 +27,10 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long>, JpaSpec
     List<Map<String, Object>> getListSuggest(@Param("avgBenchmark") Float avgBenchmark,
                                              @Param("groupCode") String groupCode,
                                              @Param("schoolId") Long schoolId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update Faculty f set f.avgBenchmark = :avgBenchmark where f.id = :id")
+    Integer updateAvgBenchmarkById(@Param("id") Long id, @Param("avgBenchmark") float avgBenchmark);
 
 }

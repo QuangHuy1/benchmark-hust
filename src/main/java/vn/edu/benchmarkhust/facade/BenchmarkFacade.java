@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import vn.edu.benchmarkhust.common.GroupType;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCodeException;
 import vn.edu.benchmarkhust.model.entity.Benchmark;
@@ -20,6 +21,7 @@ import vn.edu.benchmarkhust.service.GroupService;
 import vn.edu.benchmarkhust.transfromer.BenchmarkTransformer;
 import vn.edu.benchmarkhust.transfromer.SchoolTransformer;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,7 +84,8 @@ public class BenchmarkFacade {
         benchmark.setFaculty(facultyService.getOrElseThrow(request.getFacultyId()));
         benchmark.setGroups(groups);
 
-        benchmarkService.save(benchmark);
+        var saved = benchmarkService.save(benchmark);
+        updateAverageBenchmark(saved);
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -104,7 +107,10 @@ public class BenchmarkFacade {
         if (request.getFacultyId() != null) {
             benchmark.setFaculty(facultyService.getOrElseThrow(request.getFacultyId()));
         }
-        return benchmarkTransformer.toResponse(benchmarkService.save(benchmark));
+
+        var updated = benchmarkService.save(benchmark);
+        updateAverageBenchmark(updated);
+        return benchmarkTransformer.toResponse(updated);
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -116,5 +122,26 @@ public class BenchmarkFacade {
     public void removeGroupFromBenchmark(List<String> groupCodes, Long benchmarkId) {
         var groupIds = groupService.getAllByCodes(new HashSet<>(groupCodes)).stream().map(Group::getId).collect(Collectors.toList());
         benchmarkService.removeGroupsFromBenchmark(groupIds, benchmarkId);
+    }
+
+    public void updateAverageBenchmark(Benchmark benchmark) {
+        Long facultyId = benchmark.getFaculty().getId();
+        BenchmarkSearchRequest searchReq = new BenchmarkSearchRequest();
+        searchReq.setFacultyIds(Collections.singleton(facultyId));
+        searchReq.setGroupType(GroupType.BASIC);
+        searchReq.setSortBy("year:DESC");
+        searchReq.setPageIndex(1);
+        searchReq.setPageSize(3);
+        var benchmarkPage = benchmarkService.search(searchReq);
+        if (benchmarkPage == null || CollectionUtils.isEmpty(benchmarkPage.getContent())) {
+            facultyService.updateAvgBenchmarkById(facultyId, 0);
+            return;
+        }
+        float sumBenchmark = 0;
+        for (var ben : benchmarkPage.getContent()) {
+            sumBenchmark += ben.getScore();
+        }
+        float avgBenchmark = sumBenchmark / benchmarkPage.getContent().size();
+        facultyService.updateAvgBenchmarkById(facultyId, avgBenchmark);
     }
 }

@@ -10,6 +10,7 @@ import vn.edu.benchmarkhust.model.request.BenchmarkRequest;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.model.response.BenchmarkResponse;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +35,7 @@ public class BenchmarkController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody BenchmarkRequest request) {
+    public void create(@Valid @RequestBody BenchmarkRequest request) {
         log.info("Create Benchmark by request: {}", request);
         facade.create(request);
     }

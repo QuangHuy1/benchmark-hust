@@ -26,7 +26,12 @@ public class FacultyTransformer {
     }
 
     public void setFaculty(Faculty faculty, FacultyRequest request) {
-        faculty.setCode(request.getCode());
-        faculty.setName(request.getName());
+        if (request.getCode() != null) {
+            faculty.setCode(request.getCode());
+        }
+
+        if (request.getName() != null) {
+            faculty.setName(request.getName());
+        }
     }
 }

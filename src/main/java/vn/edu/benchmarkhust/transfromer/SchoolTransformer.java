@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import vn.edu.benchmarkhust.model.entity.School;
 import vn.edu.benchmarkhust.model.request.SchoolRequest;
 import vn.edu.benchmarkhust.model.response.SchoolResponse;
-import vn.edu.benchmarkhust.utils.Utils;
 
 @Component
 public class SchoolTransformer {
@@ -29,6 +28,16 @@ public class SchoolTransformer {
     }
 
     public void setSchool(School school, SchoolRequest request) {
-        Utils.copyPropertiesNotNull(request, school);
+        if (request.getVnName() != null) {
+            school.setVnName(request.getVnName());
+        }
+
+        if (request.getEnName() != null) {
+            school.setEnName(request.getEnName());
+        }
+
+        if (request.getAbbreviations() != null) {
+            school.setAbbreviations(request.getAbbreviations());
+        }
     }
 }

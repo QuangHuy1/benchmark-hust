@@ -38,4 +38,8 @@ public class FacultyService extends BaseService<Faculty, Long, FacultyRepository
     public List<Map<String, Object>> getListSuggest(SuggestionRequest sugRequest) {
         return repo.getListSuggest(sugRequest.getAvgBenchmark(), sugRequest.getGroupCode(), sugRequest.getSchoolId());
     }
+
+    public Integer updateAvgBenchmarkById(Long id, float avgBenchmark) {
+        return repo.updateAvgBenchmarkById(id, avgBenchmark);
+    }
 }

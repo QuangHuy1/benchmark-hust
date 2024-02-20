@@ -30,8 +30,16 @@ public class BenchmarkTransformer {
     }
 
     public void setBenchmark(Benchmark benchmark, BenchmarkRequest request) {
-        benchmark.setYear(request.getYear());
-        benchmark.setScore(request.getScore());
-        benchmark.setGroupType(request.getGroupType());
+        if (request.getYear() != null) {
+            benchmark.setYear(request.getYear());
+        }
+
+        if (request.getScore() != null) {
+            benchmark.setScore(request.getScore());
+        }
+
+        if (request.getGroupType() != null) {
+            benchmark.setGroupType(request.getGroupType());
+        }
     }
 }
