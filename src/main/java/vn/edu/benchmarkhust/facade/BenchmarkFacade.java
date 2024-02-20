@@ -60,6 +60,7 @@ public class BenchmarkFacade {
 
         if (benchmark.getFaculty() != null) {
             response.setFaculty(benchmark.getFaculty().getName());
+            response.setFacultyIds(benchmark.getFaculty().getId());
             response.setSchool(schoolTransformer.toResponse(benchmark.getFaculty().getSchool()));
         }
         return response;
