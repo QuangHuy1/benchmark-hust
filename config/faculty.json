@@ -1,0 +1,443 @@
+[
+  {
+    "code": "BF-E12",
+    "name": "Kỹ thuật thực phẩm (Chương trình tiên tiến)",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "BF-E19",
+    "name": "Kỹ thuật sinh học (Chương trình tiên tiến)",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "BF1",
+    "name": "Kỹ thuật sinh học",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "BF2",
+    "name": "Kỹ thuật thực phẩm",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "CH-E11",
+    "name": "Kỹ thuật hóa dược (Chương trình tiên tiến)",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "CH1",
+    "name": "Kỹ thuật hóa học",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "CH2",
+    "name": "Hóa học",
+    "abbreviations": "SBFT",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "CH3",
+    "name": "Kỹ thuật in",
+    "abbreviations": "SBFT",
+    "basic": ["A00","A01","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ED2",
+    "name": "Công nghệ giáo dục",
+    "abbreviations": "FEEE",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EE-E18",
+    "name": "Hệ thống điện và năng lượng tái tạo (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EE-E8",
+    "name": "Kỹ thuật Điều khiển - Tự động hóa (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EE-EP",
+    "name": "Tin học công nghiệp và Tự động hóa (Chương trình Việt-Pháp PFIEV)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01","D29"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EE1",
+    "name": "Kỹ thuật điện",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EE2",
+    "name": "Kỹ thuật Điều khiển - Tự động hóa",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM-E13",
+    "name": "Phân tích kinh doanh (Chương trình tiên tiến)",
+    "abbreviations": "SEM",
+    "basic": ["D07","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM-E14",
+    "name": "Logistics và Quản lý chuỗi cung ứng (Chương trình tiên tiến)",
+    "abbreviations": "SEM",
+    "basic": ["D07","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM1",
+    "name": "Quản lý năng lượng",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM2",
+    "name": "Quản lý công nghiệp",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM3",
+    "name": "Quản trị kinh doanh",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM4",
+    "name": "Kế toán",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EM5",
+    "name": "Tài chính - Ngân hàng",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET-E16",
+    "name": "Truyền thông số và Kỹ thuật đa phương tiện (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET-E4",
+    "name": "Kỹ thuật Điện tử - Viễn thông (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET-E5",
+    "name": "Kỹ thuật Y sinh (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET-E9",
+    "name": "Hệ thống nhúng thông minh và IoT (Chương trình tiên tiến)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01","D28"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET-LUH",
+    "name": "Điện tử-Viễn thông - ĐH Leibniz Hannover (Đức)",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01","D26"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET1",
+    "name": "Điện tử và Viễn thông",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ET2",
+    "name": "Kỹ thuật Y sinh",
+    "abbreviations": "SEEE",
+    "basic": ["A00","A01","B00"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EV1",
+    "name": "Kỹ thuật Môi trường",
+    "abbreviations": "INEST",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "EV2",
+    "name": "Quản lý Tài nguyên và Môi trường",
+    "abbreviations": "INEST",
+    "basic": ["A00","B00","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "FL1",
+    "name": "Tiếng Anh Khoa học Kỹ thuật và Công nghệ",
+    "abbreviations": "SOFL",
+    "basic": ["D01"],
+    "tsa": []
+  },
+  {
+    "code": "FL2",
+    "name": "Tiếng Anh chuyên nghiệp quốc tế",
+    "abbreviations": "SOFL",
+    "basic": ["D01"],
+    "tsa": []
+  },
+  {
+    "code": "HE1",
+    "name": "Kỹ thuật Nhiệt",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT-E10",
+    "name": "Khoa học Dữ liệu và Trí tuệ Nhân tạo (Chương trình tiên tiến)",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT-E15",
+    "name": "An toàn không gian số (Chương trình tiên tiến)",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT-E6",
+    "name": "Công nghệ thông tin (Việt-Nhật) (Chương trình tiên tiến)",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01","D28"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT-E7",
+    "name": "Công nghệ thông tin (Global ICT)",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT-EP",
+    "name": "Công nghệ thông tin (Việt-Pháp) (Chương trình tiên tiến)",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01","D29"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT1",
+    "name": "Khoa học Máy tính",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "IT2",
+    "name": "Kỹ thuật Máy tính",
+    "abbreviations": "SoICT",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME-E1",
+    "name": "Kỹ thuật Cơ điện tử (Chương trình tiên tiến)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME-GU",
+    "name": "Cơ khí - Chế tạo máy - ĐH Griffith (Úc)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME-LUH",
+    "name": "Cơ điện tử - ĐH Leibniz Hannover (Đức)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01","D26"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME-NUT",
+    "name": "Cơ điện tử - ĐH Nagaoka (Nhật Bản)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01","D28"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME1",
+    "name": "Kỹ thuật cơ điện tử",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "ME2",
+    "name": "Kỹ thuật cơ khí",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MI1",
+    "name": "Toán - Tin",
+    "abbreviations": "FAMI",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MI2",
+    "name": "Hệ thống thông tin quản lý",
+    "abbreviations": "FAMI",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MS-E3",
+    "name": "Khoa học và Kỹ thuật Vật liệu (Chương trình tiên tiến)",
+    "abbreviations": "SMSE",
+    "basic": ["A00","A01","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MS1",
+    "name": "Kỹ thuật Vật liệu",
+    "abbreviations": "SMSE",
+    "basic": ["A00","A01","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MS2",
+    "name": "Chương trình Kỹ thuật vi điện tử và công nghệ Nano",
+    "abbreviations": "SMSE",
+    "basic": ["A00","A01","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "MS3",
+    "name": "Công nghệ vật liệu polyme và compozit",
+    "abbreviations": "SMSE",
+    "basic": ["A00","A01","D07"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "PH1",
+    "name": "Vật lý kỹ thuật",
+    "abbreviations": "SEP",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "PH2",
+    "name": "Kỹ thuật hạt nhân",
+    "abbreviations": "SEP",
+    "basic": ["A00","A01","A02"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "PH3",
+    "name": "Vật lý Y khoa",
+    "abbreviations": "SEP",
+    "basic": ["A00","A01","A02"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TE-E2",
+    "name": "Kỹ thuật Ô tô (Chương trình tiên tiến)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TE-EP",
+    "name": "Cơ khí hàng không (Chương trình Việt - Pháp PFIEV)",
+    "abbreviations": "SME",
+    "basic": ["A00","A01","D29"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TE1",
+    "name": "Kỹ thuật Ô tô",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TE2",
+    "name": "Kỹ thuật cơ khí động lực học",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TE3",
+    "name": "Kỹ thuật Hàng không",
+    "abbreviations": "SME",
+    "basic": ["A00","A01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TROY-BA",
+    "name": "Quản trị kinh doanh - ĐH Troy (Hoa Kỳ)",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TROY-IT",
+    "name": "Khoa học máy tính - ĐH Troy (Hoa Kỳ)",
+    "abbreviations": "SEM",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  },
+  {
+    "code": "TX1",
+    "name": "Công nghệ Dệt May",
+    "abbreviations": "SMSE",
+    "basic": ["A00","A01","D01"],
+    "tsa": ["K00"]
+  }
+]

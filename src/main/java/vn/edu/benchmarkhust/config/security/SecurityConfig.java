@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/login", "/faculty/suggest").permitAll()
                 .anyRequest().authenticated()
                 .and().apply(securityConfigurerAdapter())
                 .and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/swagger-ui/**", "/auth/**")
-                .antMatchers(HttpMethod.POST, "/user", "/user/login", "/user/change-pass")
+                .antMatchers(HttpMethod.POST, "/user", "/user/login", "/user/change-pass", "/faculty/suggest")
                 .antMatchers(HttpMethod.GET, "/**");
     }
 

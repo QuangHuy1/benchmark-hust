@@ -6,11 +6,13 @@ import vn.edu.benchmarkhust.common.GroupType;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCode;
 import vn.edu.benchmarkhust.model.entity.Benchmark;
+import vn.edu.benchmarkhust.model.entity.Faculty;
 import vn.edu.benchmarkhust.model.request.search.BenchmarkSearchRequest;
 import vn.edu.benchmarkhust.repository.BenchmarkRepository;
 import vn.edu.benchmarkhust.specification.BenchmarkSpecification;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepository> {
@@ -28,6 +30,10 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
         return repo.existedByYearAndFacultyIdAndGroupType(year, facultyId, groupType.toString());
     }
 
+    public Optional<Benchmark> findOne(Faculty faculty, GroupType groupType, Integer year) {
+        return repo.getByFacultyAndGroupTypeAndYear(faculty, groupType, year);
+    }
+
     public Page<Benchmark> search(BenchmarkSearchRequest searchRequest) {
         var spec = BenchmarkSpecification.with(searchRequest);
         return repo.findAll(spec, getPageable(searchRequest.getPageIndex(), searchRequest.getPageSize(), searchRequest.getSortBy()));
@@ -35,5 +41,9 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
 
     public Integer removeGroupsFromBenchmark(List<Long> groupIds, Long benchmarkId) {
         return repo.removeGroupsFromBenchmark(groupIds, benchmarkId);
+    }
+
+    public Integer countAllByYear(Integer year) {
+        return repo.countAllByYear(year);
     }
 }

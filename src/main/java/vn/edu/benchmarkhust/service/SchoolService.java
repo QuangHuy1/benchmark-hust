@@ -24,4 +24,8 @@ public class SchoolService extends BaseService<School, Long, SchoolRepository> {
     public List<School> findByVnNameOrEnNameOrAbbreviations(String vnName, String enName, String abbreviations) {
         return repo.findByVnNameOrEnNameOrAbbreviations(vnName, enName, abbreviations);
     }
+
+    public Optional<School> findByAbbreviations(String abbreviations) {
+        return repo.findByAbbreviations(abbreviations);
+    }
 }

@@ -1,0 +1,69 @@
+[
+  {
+    "code": "A01",
+    "subject1": "Toán",
+    "subject2": "Vật Lý",
+    "subject3": "Hóa Học",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "A01",
+    "subject1": "Toán",
+    "subject2": "Vật Lý",
+    "subject3": "Tiếng Anh",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "A02",
+    "subject1": "Toán",
+    "subject2": "Vật Lý",
+    "subject3": "Sinh học",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "B00",
+    "subject1": "Toán",
+    "subject2": "Hóa Học",
+    "subject3": "Sinh học",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "D01",
+    "subject1": "Toán",
+    "subject2": "Văn",
+    "subject3": "Anh",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "D07",
+    "subject1": "Toán",
+    "subject2": "Hóa",
+    "subject3": "Anh",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "D26",
+    "subject1": "Toán",
+    "subject2": "Lý",
+    "subject3": "Đức",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "D28",
+    "subject1": "Toán",
+    "subject2": "Lý",
+    "subject3": "Nhật",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "D29",
+    "subject1": "Toán",
+    "subject2": "Lý",
+    "subject3": "Pháp",
+    "groupType": "BASIC"
+  },
+  {
+    "code": "K00",
+    "groupType": "TSA"
+  }
+]

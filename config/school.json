@@ -1,0 +1,57 @@
+[
+  {
+    "abbreviations": "SBFT",
+    "vnName": "Trường Hóa và Khoa học sự sống",
+    "enName": "School of Biotechnology and Food Technology"
+  },
+  {
+    "abbreviations": "FEEE",
+    "vnName": "Viện Sư phạm Kỹ thuật",
+    "enName": "Faculty of Engineering Education"
+  },
+  {
+    "abbreviations": "SEEE",
+    "vnName": "Trường Điện - Điện tử",
+    "enName": "School of Electrical & Electronic Engineering"
+  },
+  {
+    "abbreviations": "SEM",
+    "vnName": "Viện Kinh tế và Quản lý",
+    "enName": "School of Economics and Management"
+  },
+  {
+    "abbreviations": "INEST",
+    "vnName": "Viện Khoa học và Công nghệ Môi trường",
+    "enName": "School of Environmental Science and Technology"
+  },
+  {
+    "abbreviations": "SOFL",
+    "vnName": "Viện ngoại ngữ",
+    "enName": "School of Foreign Languages"
+  },
+  {
+    "abbreviations": "SME",
+    "vnName": "Trường Cơ Khí",
+    "enName": "School of Mechanical Engineering"
+  },
+  {
+    "abbreviations": "SoICT",
+    "vnName": "Trường Công nghệ Thông tin và Truyền thông",
+    "enName": "School of Information and Communications Technology"
+  },
+  {
+    "abbreviations": "FAMI",
+    "vnName": "Viện Toán ứng dụng và Tin học",
+    "enName": "Faculty of Mathematics and Informatics"
+  },
+  {
+    "abbreviations": "SMSE",
+    "vnName": "Trường Vật liệu",
+    "enName": "School of Materials Science and Engineering"
+  },
+  {
+    "abbreviations": "SEP",
+    "vnName": "Viện Vật lý Kỹ thuật",
+    "enName": "School of Engineering Physics"
+  }
+]

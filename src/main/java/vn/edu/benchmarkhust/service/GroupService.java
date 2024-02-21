@@ -10,6 +10,7 @@ import vn.edu.benchmarkhust.repository.GroupRepository;
 import vn.edu.benchmarkhust.specification.GroupSpecification;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -26,6 +27,10 @@ public class GroupService extends BaseService<Group, Long, GroupRepository> {
 
     public Set<Group> getAllByCodes(Set<String> codes) {
         return repo.findAllByCodeIn(codes);
+    }
+
+    public Optional<Group> getByCode(String code) {
+        return repo.getByCode(code);
     }
 
     public void validateDuplicateCode(String code) {

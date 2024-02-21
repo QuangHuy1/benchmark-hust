@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SchoolRepository extends JpaRepository<School, Long>, JpaSpecificationExecutor<School> {
 
     List<School> findByVnNameOrEnNameOrAbbreviations(String vnName, String enName, String abbreviations);
+
+    Optional<School> findByAbbreviations(String abbreviations);
 }
