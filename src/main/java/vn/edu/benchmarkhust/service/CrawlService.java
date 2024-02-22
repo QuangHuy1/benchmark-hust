@@ -7,18 +7,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import vn.edu.benchmarkhust.common.GroupType;
-import vn.edu.benchmarkhust.facade.BenchmarkFacade;
-import vn.edu.benchmarkhust.facade.FacultyFacade;
-import vn.edu.benchmarkhust.facade.GroupFacade;
-import vn.edu.benchmarkhust.facade.SchoolFacade;
-import vn.edu.benchmarkhust.model.entity.Benchmark;
-import vn.edu.benchmarkhust.model.entity.Faculty;
-import vn.edu.benchmarkhust.model.entity.Group;
-import vn.edu.benchmarkhust.model.entity.School;
-import vn.edu.benchmarkhust.model.request.BenchmarkRequest;
-import vn.edu.benchmarkhust.model.request.FacultyRequest;
-import vn.edu.benchmarkhust.model.request.GroupRequest;
-import vn.edu.benchmarkhust.model.request.SchoolRequest;
+import vn.edu.benchmarkhust.facade.*;
+import vn.edu.benchmarkhust.model.entity.*;
+import vn.edu.benchmarkhust.model.request.*;
 import vn.edu.benchmarkhust.model.response.TsHustResponse;
 import vn.edu.benchmarkhust.service.connector.TsHustClient;
 
@@ -38,6 +29,8 @@ public class CrawlService {
     private final FacultyFacade facultyFacade;
     private final GroupService groupService;
     private final GroupFacade groupFacade;
+    private final UserFacade userFacade;
+    private final UserService userService;
     private final BenchmarkService benchmarkService;
     private final BenchmarkFacade benchmarkFacade;
     private List<FacultyRequest> facultyRequests;
@@ -50,6 +43,8 @@ public class CrawlService {
                         FacultyFacade facultyFacade,
                         GroupService groupService,
                         GroupFacade groupFacade,
+                        UserFacade userFacade,
+                        UserService userService,
                         BenchmarkService benchmarkService,
                         BenchmarkFacade benchmarkFacade,
                         TsHustClient tsHustClient) {
@@ -60,6 +55,8 @@ public class CrawlService {
         this.facultyFacade = facultyFacade;
         this.groupService = groupService;
         this.groupFacade = groupFacade;
+        this.userFacade = userFacade;
+        this.userService = userService;
         this.benchmarkService = benchmarkService;
         this.benchmarkFacade = benchmarkFacade;
         this.tsHustClient = tsHustClient;
@@ -68,6 +65,7 @@ public class CrawlService {
         configFaculty();
         configBenchmark();
         new Thread(this::configBenchmark).start();
+        new Thread(this::configUserAdmin).start();
     }
 
     public void configSchool() {
@@ -232,5 +230,22 @@ public class CrawlService {
         } catch (Exception e) {
             log.error("Failed to migrate data benchmark: {}", e.getMessage(), e);
         }
+    }
+
+    public void configUserAdmin() {
+        UserRequest request = new UserRequest();
+        request.setUsername("admin");
+        request.setFullName("ADMIN");
+        request.setPassword("12345678");
+
+        Optional<User> user = userService.findByUsernameOpt("admin");
+        if (user.isEmpty()) {
+            userFacade.create(request);
+            log.info("Create User Admin Done!");
+            return;
+        }
+
+        userFacade.update(user.get().getId(), request);
+        log.info("Update User Admin Done!");
     }
 }

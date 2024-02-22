@@ -32,6 +32,7 @@ public class UserTransformer {
     }
 
     public void setUser(User user, UserRequest request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
         Utils.copyPropertiesNotNull(request, user);
     }
 }

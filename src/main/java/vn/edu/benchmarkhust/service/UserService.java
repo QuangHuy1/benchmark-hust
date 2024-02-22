@@ -31,6 +31,10 @@ public class UserService extends BaseService<User, Long, UserRepository> impleme
         return repo.findByUsername(username).orElseThrow(() -> new ErrorCodeException(BenchmarkErrorCode.NOT_FOUND_ENTITY));
     }
 
+    public Optional<User> findByUsernameOpt(String username) {
+        return repo.findByUsername(username);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
