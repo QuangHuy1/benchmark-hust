@@ -34,7 +34,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/benchmark_hust?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8
     username: root
-    password: 20182600
+    password: root
     hikari:
       connectionTimeout: 30000
       minimumIdle: 10
