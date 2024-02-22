@@ -67,7 +67,7 @@ public class CrawlService {
         configGroup();
         configFaculty();
         configBenchmark();
-        configBenchmark();
+        new Thread(this::configBenchmark).start();
     }
 
     public void configSchool() {
