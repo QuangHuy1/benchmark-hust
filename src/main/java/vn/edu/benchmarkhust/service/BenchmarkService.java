@@ -13,6 +13,7 @@ import vn.edu.benchmarkhust.specification.BenchmarkSpecification;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepository> {
@@ -45,5 +46,9 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
 
     public Integer countAllByYear(Integer year) {
         return repo.countAllByYear(year);
+    }
+
+    public List<Long> findAllFacultyIdByGroupIdsIn(Set<Long> groupIds) {
+        return repo.findAllFacultyIdByGroupIdsIn(groupIds);
     }
 }

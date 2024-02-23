@@ -17,17 +17,8 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long>, JpaSpec
 
     Optional<Faculty> findByCode(String code);
 
-    @Query(value = "select f.id as facultyId, f.name as facultyName, f.avg_benchmark as avgBenchmark, g.code as groupCode, s.id as schoolId, s.vn_name as schoolName " +
-            "from benchmark b " +
-            "left join benchmark_group bg on bg.group_id = b.id " +
-            "left join `group` g on g.id = bg.group_id " +
-            "left join faculty f on f.id = b.faculty_id " +
-            "left join school s on s.id = f.school_id " +
-            "where f.avg_benchmark between (:avgBenchmark - 1) and (:avgBenchmark + 1) or g.code in :groupCodes or s.id in :schoolIds",
-            nativeQuery = true)
-    List<Map<String, Object>> getListSuggest(@Param("avgBenchmark") Float avgBenchmark,
-                                             @Param("groupCodes") Set<String> groupCodes,
-                                             @Param("schoolIds") Set<Long> schoolIds);
+    @Query(value = "select id from faculty where school_id in :schoolIds", nativeQuery = true)
+    List<Long> findAllFacultyIdBySchoolIdIn(@Param("schoolIds") Set<Long> schoolIds);
 
     @Modifying
     @Transactional

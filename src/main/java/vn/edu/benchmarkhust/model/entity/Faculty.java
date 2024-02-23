@@ -18,7 +18,7 @@ public class Faculty extends AbstractAuditingTimeEntity {
     private Long id;
     private String code;
     private String name;
-    private Float avgBenchmark;
+    private float avgBenchmark;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private School school;

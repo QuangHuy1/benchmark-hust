@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,6 +13,7 @@ public class SuggestionResponse {
     private Long facultyId;
     private String facultyName;
     private Float avgBenchmark;
+    private Set<Long> groupIds;
     private Set<String> groupCodes;
     private Long schoolId;
     private String schoolName;

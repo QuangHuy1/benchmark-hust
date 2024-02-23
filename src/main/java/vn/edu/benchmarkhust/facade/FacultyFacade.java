@@ -9,12 +9,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.benchmarkhust.exception.BenchmarkErrorCode;
 import vn.edu.benchmarkhust.exception.ErrorCodeException;
+import vn.edu.benchmarkhust.model.entity.Benchmark;
 import vn.edu.benchmarkhust.model.entity.Faculty;
+import vn.edu.benchmarkhust.model.entity.Group;
 import vn.edu.benchmarkhust.model.request.FacultyRequest;
 import vn.edu.benchmarkhust.model.request.SuggestionRequest;
 import vn.edu.benchmarkhust.model.request.search.FacultySearchRequest;
 import vn.edu.benchmarkhust.model.response.FacultyResponse;
 import vn.edu.benchmarkhust.model.response.SuggestionResponse;
+import vn.edu.benchmarkhust.service.BenchmarkService;
 import vn.edu.benchmarkhust.service.FacultyService;
 import vn.edu.benchmarkhust.service.SchoolService;
 import vn.edu.benchmarkhust.transfromer.FacultyTransformer;
@@ -30,6 +33,7 @@ public class FacultyFacade {
 
     private final SchoolService schoolService;
     private final FacultyService facultyService;
+    private final BenchmarkService benchmarkService;
 
     private final FacultyTransformer facultyTransformer;
     private final SchoolTransformer schoolTransformer;
@@ -93,21 +97,30 @@ public class FacultyFacade {
 
     public List<SuggestionResponse> getListSuggest(List<SuggestionRequest> suggestionRequests) {
         var sugRequest = summarizeRequest(suggestionRequests);
-        var listSuggestion = facultyService.getListSuggest(sugRequest);
-        var groupByFacultyId = listSuggestion.stream().filter(f -> !Objects.isNull(f.get("facultyId")))
-                .collect(Collectors.groupingBy(f -> Long.parseLong(f.get("facultyId").toString())));
+        var allFacultyIdByGroupIdsIn = benchmarkService.findAllFacultyIdByGroupIdsIn(sugRequest.getGroupIds());
+        var allFacultyIdBySchoolIdIn = facultyService.findAllFacultyIdBySchoolIdIn(sugRequest.getSchoolIds());
 
-        List<SuggestionResponse> suggestionResponses = new ArrayList<>();
-        groupByFacultyId.forEach((k, v) -> {
-            SuggestionResponse sug = new SuggestionResponse();
-            sug.setFacultyId(k);
-            Optional.ofNullable(v.get(0).get("facultyName")).ifPresent(opt -> sug.setFacultyName(opt.toString()));
-            Optional.ofNullable(v.get(0).get("avgBenchmark")).ifPresent(opt -> sug.setAvgBenchmark(Float.parseFloat(opt.toString())));
-            sug.setGroupCodes(v.stream().filter(gr -> gr.get("groupCode") != null).map(gr -> gr.get("groupCode").toString()).collect(Collectors.toSet()));
-            Optional.ofNullable(v.get(0).get("schoolId")).ifPresent(opt -> sug.setSchoolId(Long.parseLong(opt.toString())));
-            Optional.ofNullable(v.get(0).get("schoolName")).ifPresent(opt -> sug.setSchoolName(opt.toString()));
-            suggestionResponses.add(sug);
-        });
+        Set<Long> allFacultyIds = new HashSet<>();
+        allFacultyIds.addAll(allFacultyIdByGroupIdsIn);
+        allFacultyIds.addAll(allFacultyIdBySchoolIdIn);
+
+        var suggestionResponses = allFacultyIds.stream().map(fId -> {
+            var faculty = facultyService.getOrElseThrow(fId);
+
+            SuggestionResponse sugResponse = new SuggestionResponse();
+            sugResponse.setFacultyId(faculty.getId());
+            sugResponse.setFacultyName(faculty.getName());
+            sugResponse.setAvgBenchmark(faculty.getAvgBenchmark());
+            sugResponse.setSchoolId(faculty.getSchool().getId());
+            sugResponse.setSchoolName(faculty.getSchool().getVnName());
+
+            var groups = faculty.getBenchmarks().stream().map(Benchmark::getGroups).flatMap(Set::stream).collect(Collectors.toSet());
+            sugResponse.setGroupIds(groups.stream().map(Group::getId).collect(Collectors.toSet()));
+            sugResponse.setGroupCodes(groups.stream().map(Group::getCode).collect(Collectors.toSet()));
+
+            return sugResponse;
+        }).collect(Collectors.toList());
+
         computePriority(suggestionRequests, suggestionResponses);
         return suggestionResponses.stream().limit(10).collect(Collectors.toList());
     }
@@ -120,8 +133,8 @@ public class FacultyFacade {
                 continue;
             }
 
-            if ("groupCodes".equals(sug.getFieldName())) {
-                sugRequest.setGroupCodes(sug.getGroupCodes());
+            if ("groupIds".equals(sug.getFieldName())) {
+                sugRequest.setGroupIds(sug.getGroupIds());
                 continue;
             }
 
@@ -134,7 +147,7 @@ public class FacultyFacade {
 
     private void computePriority(List<SuggestionRequest> suggestionRequests, List<SuggestionResponse> suggestionResponses) {
         for (var response : suggestionResponses) {
-            float priorityPoint = response.getPriorityPoint();
+            float priorityPoint = 0;
             for (var request : suggestionRequests) {
                 if (request.getAvgBenchmark() != null
                         && response.getAvgBenchmark() >= request.getAvgBenchmark() - 1
@@ -143,8 +156,8 @@ public class FacultyFacade {
                     continue;
                 }
 
-                if (CollectionUtils.isNotEmpty(request.getGroupCodes())
-                        && request.getGroupCodes().stream().anyMatch(gr -> response.getGroupCodes().contains(gr))) {
+                if (CollectionUtils.isNotEmpty(request.getGroupIds())
+                        && request.getGroupIds().stream().anyMatch(gr -> response.getGroupIds().contains(gr))) {
                     priorityPoint += request.getPriorityPoint() * 2;
                     continue;
                 }
