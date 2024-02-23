@@ -11,6 +11,7 @@ import vn.edu.benchmarkhust.model.entity.Faculty;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long>, JpaSpecificationExecutor<Faculty> {
 
@@ -22,11 +23,11 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long>, JpaSpec
             "left join `group` g on g.id = bg.group_id " +
             "left join faculty f on f.id = b.faculty_id " +
             "left join school s on s.id = f.school_id " +
-            "where f.avg_benchmark between (:avgBenchmark - 1) and (:avgBenchmark + 1) or g.code = :groupCode or s.id = :schoolId",
+            "where f.avg_benchmark between (:avgBenchmark - 1) and (:avgBenchmark + 1) or g.code in :groupCodes or s.id in :schoolIds",
             nativeQuery = true)
     List<Map<String, Object>> getListSuggest(@Param("avgBenchmark") Float avgBenchmark,
-                                             @Param("groupCode") String groupCode,
-                                             @Param("schoolId") Long schoolId);
+                                             @Param("groupCodes") Set<String> groupCodes,
+                                             @Param("schoolIds") Set<Long> schoolIds);
 
     @Modifying
     @Transactional

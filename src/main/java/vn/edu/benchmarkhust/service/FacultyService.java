@@ -36,7 +36,7 @@ public class FacultyService extends BaseService<Faculty, Long, FacultyRepository
     }
 
     public List<Map<String, Object>> getListSuggest(SuggestionRequest sugRequest) {
-        return repo.getListSuggest(sugRequest.getAvgBenchmark(), sugRequest.getGroupCode(), sugRequest.getSchoolId());
+        return repo.getListSuggest(sugRequest.getAvgBenchmark(), sugRequest.getGroupCodes(), sugRequest.getSchoolIds());
     }
 
     public Integer updateAvgBenchmarkById(Long id, float avgBenchmark) {

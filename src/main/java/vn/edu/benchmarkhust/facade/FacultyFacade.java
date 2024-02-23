@@ -3,7 +3,6 @@ package vn.edu.benchmarkhust.facade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
@@ -104,13 +103,13 @@ public class FacultyFacade {
             sug.setFacultyId(k);
             Optional.ofNullable(v.get(0).get("facultyName")).ifPresent(opt -> sug.setFacultyName(opt.toString()));
             Optional.ofNullable(v.get(0).get("avgBenchmark")).ifPresent(opt -> sug.setAvgBenchmark(Float.parseFloat(opt.toString())));
-            Optional.ofNullable(v.get(0).get("groupCode")).ifPresent(opt -> sug.setGroupCode(opt.toString()));
+            sug.setGroupCodes(v.stream().filter(gr -> gr.get("groupCode") != null).map(gr -> gr.get("groupCode").toString()).collect(Collectors.toSet()));
             Optional.ofNullable(v.get(0).get("schoolId")).ifPresent(opt -> sug.setSchoolId(Long.parseLong(opt.toString())));
             Optional.ofNullable(v.get(0).get("schoolName")).ifPresent(opt -> sug.setSchoolName(opt.toString()));
             suggestionResponses.add(sug);
         });
         computePriority(suggestionRequests, suggestionResponses);
-        return suggestionResponses;
+        return suggestionResponses.stream().limit(10).collect(Collectors.toList());
     }
 
     private SuggestionRequest summarizeRequest(List<SuggestionRequest> suggestionRequests) {
@@ -121,13 +120,13 @@ public class FacultyFacade {
                 continue;
             }
 
-            if ("groupCode".equals(sug.getFieldName())) {
-                sugRequest.setGroupCode(sug.getGroupCode());
+            if ("groupCodes".equals(sug.getFieldName())) {
+                sugRequest.setGroupCodes(sug.getGroupCodes());
                 continue;
             }
 
-            if ("schoolId".equals(sug.getFieldName())) {
-                sugRequest.setSchoolId(sug.getSchoolId());
+            if ("schoolIds".equals(sug.getFieldName())) {
+                sugRequest.setSchoolIds(sug.getSchoolIds());
             }
         }
         return sugRequest;
@@ -144,14 +143,14 @@ public class FacultyFacade {
                     continue;
                 }
 
-                if (StringUtils.isNotEmpty(request.getGroupCode())
-                        && StringUtils.equals(response.getGroupCode(), request.getGroupCode())) {
+                if (CollectionUtils.isNotEmpty(request.getGroupCodes())
+                        && request.getGroupCodes().stream().anyMatch(gr -> response.getGroupCodes().contains(gr))) {
                     priorityPoint += request.getPriorityPoint() * 2;
                     continue;
                 }
 
-                if (request.getSchoolId() != null
-                        && Objects.equals(response.getSchoolId(), request.getSchoolId())) {
+                if (request.getSchoolIds() != null
+                        && request.getSchoolIds().contains(response.getSchoolId())) {
                     priorityPoint += request.getPriorityPoint() * 2;
                 }
             }

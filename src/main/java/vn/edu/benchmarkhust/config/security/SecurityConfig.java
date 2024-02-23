@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/swagger-ui/**", "/auth/**")
+        web.ignoring().antMatchers("/swagger-ui/**", "/auth/**", "/**")
                 .antMatchers(HttpMethod.POST, "/user", "/user/login", "/user/change-pass", "/faculty/suggest")
                 .antMatchers(HttpMethod.GET, "/**");
     }
