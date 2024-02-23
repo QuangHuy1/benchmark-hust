@@ -12,6 +12,7 @@ import vn.edu.benchmarkhust.model.entity.Faculty;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface BenchmarkRepository extends JpaRepository<Benchmark, Long>, JpaSpecificationExecutor<Benchmark> {
 
@@ -29,4 +30,8 @@ public interface BenchmarkRepository extends JpaRepository<Benchmark, Long>, Jpa
     Optional<Benchmark> getByFacultyAndGroupTypeAndYear(Faculty faculty, GroupType groupType, Integer year);
 
     Integer countAllByYear(Integer year);
+
+    @Query(value = "select distinct faculty_id from benchmark b join benchmark_group bg on b.id = bg.benchmark_id where bg.group_id in :groupIds",
+            nativeQuery = true)
+    List<Long> findAllFacultyIdByGroupIdsIn(@Param("groupIds") Set<Long> groupIds);
 }
