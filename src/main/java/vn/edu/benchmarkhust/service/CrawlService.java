@@ -166,7 +166,7 @@ public class CrawlService {
 
     public void configBenchmark() {
         if (benchmarkService.countAllByYear(2024) > 0) {
-            return;
+//            return;
         }
 
         if (facultyRequests == null || CollectionUtils.isEmpty(facultyRequests)) {

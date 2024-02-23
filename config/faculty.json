@@ -176,7 +176,7 @@
   },
   {
     "code": "ET-LUH",
-    "name": "Điện tử-Viễn thông - ĐH Leibniz Hannover (Đức)",
+    "name": "Điện tử-Viễn thông - DH Leibniz Hannover (Đức)",
     "abbreviations": "SEEE",
     "basic": ["A00","A01","D26"],
     "tsa": ["K00"]
@@ -288,21 +288,21 @@
   },
   {
     "code": "ME-GU",
-    "name": "Cơ khí - Chế tạo máy - ĐH Griffith (Úc)",
+    "name": "Cơ khí - Chế tạo máy - DH Griffith (Úc)",
     "abbreviations": "SME",
     "basic": ["A00","A01"],
     "tsa": ["K00"]
   },
   {
     "code": "ME-LUH",
-    "name": "Cơ điện tử - ĐH Leibniz Hannover (Đức)",
+    "name": "Cơ điện tử - DH Leibniz Hannover (Đức)",
     "abbreviations": "SME",
     "basic": ["A00","A01","D26"],
     "tsa": ["K00"]
   },
   {
     "code": "ME-NUT",
-    "name": "Cơ điện tử - ĐH Nagaoka (Nhật Bản)",
+    "name": "Cơ điện tử - DH Nagaoka (Nhật Bản)",
     "abbreviations": "SME",
     "basic": ["A00","A01","D28"],
     "tsa": ["K00"]
@@ -421,14 +421,14 @@
   },
   {
     "code": "TROY-BA",
-    "name": "Quản trị kinh doanh - ĐH Troy (Hoa Kỳ)",
+    "name": "Quản trị kinh doanh - DH Troy (Hoa Kỳ)",
     "abbreviations": "SEM",
     "basic": ["A00","A01","D01"],
     "tsa": ["K00"]
   },
   {
     "code": "TROY-IT",
-    "name": "Khoa học máy tính - ĐH Troy (Hoa Kỳ)",
+    "name": "Khoa học máy tính - DH Troy (Hoa Kỳ)",
     "abbreviations": "SEM",
     "basic": ["A00","A01","D01"],
     "tsa": ["K00"]
