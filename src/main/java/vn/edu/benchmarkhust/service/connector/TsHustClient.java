@@ -37,7 +37,14 @@ public class TsHustClient {
                         .replace(" ", "-"),
                 Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        String output = pattern.matcher(normal).replaceAll("");
+        String output = pattern.matcher(normal).replaceAll("")
+                .replace("ê", "e")
+                .replace("ơ", "o")
+                .replace("ô", "o")
+                .replace("â", "a")
+                .replace("ă", "a")
+                .replace("ư", "u")
+                .replace("đ", "d");
 
         HttpHeaders headers = buildHeader();
 
