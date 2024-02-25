@@ -48,7 +48,7 @@ public class BenchmarkService extends BaseService<Benchmark, Long, BenchmarkRepo
         return repo.countAllByYear(year);
     }
 
-    public List<Long> findAllFacultyIdByGroupIdsIn(Set<Long> groupIds) {
-        return repo.findAllFacultyIdByGroupIdsIn(groupIds);
+    public List<Long> findAllFacultyIdByAvgBenchmarkAndGroupIdsIn(Float avgBenchmark, Set<Long> groupIds) {
+        return repo.findAllFacultyIdByAvgBenchmarkAndGroupIdsIn(avgBenchmark, groupIds);
     }
 }

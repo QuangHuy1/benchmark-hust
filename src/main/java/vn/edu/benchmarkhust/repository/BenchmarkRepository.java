@@ -31,7 +31,8 @@ public interface BenchmarkRepository extends JpaRepository<Benchmark, Long>, Jpa
 
     Integer countAllByYear(Integer year);
 
-    @Query(value = "select distinct faculty_id from benchmark b join benchmark_group bg on b.id = bg.benchmark_id where bg.group_id in :groupIds",
+    @Query(value = "select distinct faculty_id from benchmark b join benchmark_group bg on b.id = bg.benchmark_id " +
+            "where b.avg_benchmark between (:avgBenchmark - 1) and (:avgBenchmark + 1) and bg.group_id in :groupIds",
             nativeQuery = true)
-    List<Long> findAllFacultyIdByGroupIdsIn(@Param("groupIds") Set<Long> groupIds);
+    List<Long> findAllFacultyIdByAvgBenchmarkAndGroupIdsIn(@Param("avgBenchmark") Float avgBenchmark, @Param("groupIds") Set<Long> groupIds);
 }

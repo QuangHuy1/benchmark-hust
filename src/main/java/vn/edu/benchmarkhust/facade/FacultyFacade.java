@@ -97,7 +97,7 @@ public class FacultyFacade {
 
     public List<SuggestionResponse> getListSuggest(List<SuggestionRequest> suggestionRequests) {
         var sugRequest = summarizeRequest(suggestionRequests);
-        var allFacultyIdByGroupIdsIn = benchmarkService.findAllFacultyIdByGroupIdsIn(sugRequest.getGroupIds());
+        var allFacultyIdByGroupIdsIn = benchmarkService.findAllFacultyIdByAvgBenchmarkAndGroupIdsIn(sugRequest.getAvgBenchmark(), sugRequest.getGroupIds());
         var allFacultyIdBySchoolIdIn = facultyService.findAllFacultyIdBySchoolIdIn(sugRequest.getSchoolIds());
 
         Set<Long> allFacultyIds = new HashSet<>();
